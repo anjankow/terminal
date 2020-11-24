@@ -1,0 +1,2 @@
+*.pyproject.user
+__pycache__/*
