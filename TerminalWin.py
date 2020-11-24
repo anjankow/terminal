@@ -1,11 +1,14 @@
 import sys
 
 from PyQt5 import QtCore, QtGui, QtWidgets, uic
-
+from PyQt5.QtGui import QColor
+from SerialPort import SerialPort
 
 qtCreatorFile = "TerminalWin.ui"
 Ui_TerminalWin, QtBaseClass = uic.loadUiType(qtCreatorFile)
 
+CommandColor = QColor('#c6ffee')
+ResponseColor = QColor('#fcfed4')
 
 class CommandGroup:
     def __init__(self, textEdit, sendButton, commandLabel):
@@ -19,6 +22,7 @@ class TerminalWin(QtWidgets.QMainWindow, Ui_TerminalWin):
         QtWidgets.QMainWindow.__init__(self)
         Ui_TerminalWin.__init__(self)
         self.setupUi(self)
+
         self.commandGroups = [
             CommandGroup(self.plainTextEdit_0, self.sendButton_0, self.label_0),
             CommandGroup(self.plainTextEdit_1, self.sendButton_1, self.label_1),
@@ -32,12 +36,38 @@ class TerminalWin(QtWidgets.QMainWindow, Ui_TerminalWin):
         self.sendButton_3.clicked.connect(lambda: self.send(3))
         self.sendButton_4.clicked.connect(lambda: self.send(4))
 
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        font.setFamily('Consolas')
+        self.textEdit.setFont(font)
+        self.textEdit.setStyleSheet('background-color: rgb(53, 43, 65);')
+        self.textEdit.setPlainText('')
+
+        self.portName = "COM12"
+        self.serialPort = SerialPort(self.portName)
+        self.serialPort.open()
+
 
     def send(self, commandNum: int):
-        if self.commandGroups[commandNum].commandTextEdit.toPlainText() != "":
-            self.commandGroups[commandNum].commandLabel.setText(self.commandGroups[commandNum].commandTextEdit.toPlainText())
-        else:
-            self.commandGroups[commandNum].commandLabel.setText("Nothing is there!")
+        # get the command from the text editor
+        command = self.commandGroups[commandNum].commandTextEdit.toPlainText()
+        if command != "":
+            # print the command on the textEdit
+            print("Sending command %i: %s", commandNum, command)
+            self.textEdit.setTextColor(CommandColor)
+            self.textEdit.append(command)
+
+            # write and read from the serial port
+            bytes = self.serialPort.writeRead(command)
+
+            # print the response
+            response = ""
+            for byte in bytes:
+                response += format(byte, 'x') + " "
+            print("Response:", response)
+            self.textEdit.setTextColor(ResponseColor)
+            self.textEdit.append(response)
+
 
 
 

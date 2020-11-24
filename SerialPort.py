@@ -17,11 +17,9 @@ class SerialPort:
         if not self.serialCom.is_open:
             raise SerialException('Port can not be open')
 
-    def read(self):
+    def writeRead(self, data: str):
+        self.serialCom.write(str.encode(data))
         return self.serialCom.read_until()
-
-    def write(self, data: str):
-        self.serialCom.write(data)
 
 
 
@@ -29,8 +27,6 @@ if __name__ == "__main__":
     ser = SerialPort("COM12")
     ser.open()
 
-    ser.write(str.encode('UCI(0x20,0x02,0x00,0x00);'))
-    print('written, reading...')
-    bytes = ser.read()
+    bytes = ser.writeRead('UCI(0x20,0x02,0x00,0x00);')
     for byte in bytes:
         print("This is byte: 0x", format(byte, 'x'))

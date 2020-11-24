@@ -25,6 +25,7 @@
     </property>
     <property name="font">
      <font>
+      <family>Consolas</family>
       <pointsize>10</pointsize>
      </font>
     </property>
@@ -55,6 +56,7 @@
     </property>
     <property name="font">
      <font>
+      <family>Consolas</family>
       <pointsize>10</pointsize>
      </font>
     </property>
@@ -85,6 +87,7 @@
     </property>
     <property name="font">
      <font>
+      <family>Consolas</family>
       <pointsize>10</pointsize>
      </font>
     </property>
@@ -115,6 +118,7 @@
     </property>
     <property name="font">
      <font>
+      <family>Consolas</family>
       <pointsize>10</pointsize>
      </font>
     </property>
@@ -284,7 +288,7 @@
      <string>Clear</string>
     </property>
    </widget>
-   <widget class="QTextBrowser" name="textBrowser">
+   <widget class="QTextEdit" name="textEdit">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -306,7 +310,7 @@
      <bool>false</bool>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(53, 43, 65);
+     <string notr="true">color:rgb(255, 239, 226);background-color: rgb(53, 43, 65);
 </string>
     </property>
     <property name="frameShape">
@@ -326,7 +330,7 @@
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Consolas'; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:15px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; color:#fcfed4;&quot;&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer semper orci nec ligula aliquet consequat. Sed ante risus, euismod gravida mattis sit amet, imperdiet id massa. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Aliquam turpis est, viverra at tincidunt eu, blandit ornare metus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec aliquet porttitor mi, nec pretium orci faucibus vel. Maecenas rutrum justo sit amet lectus egestas, eget fringilla mi elementum. Aliquam eget felis quis diam pulvinar pulvinar at non mi. Sed in augue tincidunt dolor accumsan efficitur.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;p style=&quot; margin-top:0px; margin-bottom:15px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; color:#c6ffee;&quot;&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer semper orci nec ligula aliquet consequat. Sed ante risus, euismod gravida mattis sit amet, imperdiet id massa. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Aliquam turpis est, viverra at tincidunt eu, blandit ornare metus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec aliquet porttitor mi, nec pretium orci faucibus vel. Maecenas rutrum justo sit amet lectus egestas, eget fringilla mi elementum. Aliquam eget felis quis diam pulvinar pulvinar at non mi. Sed in augue tincidunt dolor accumsan efficitur.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QPlainTextEdit" name="plainTextEdit_0">
@@ -340,6 +344,7 @@ p, li { white-space: pre-wrap; }
     </property>
     <property name="font">
      <font>
+      <family>Consolas</family>
       <pointsize>10</pointsize>
      </font>
     </property>
