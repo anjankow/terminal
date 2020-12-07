@@ -201,6 +201,7 @@
     </property>
     <property name="font">
      <font>
+      <family>MS Shell Dlg 2</family>
       <pointsize>8</pointsize>
      </font>
     </property>
@@ -219,6 +220,7 @@
     </property>
     <property name="font">
      <font>
+      <family>MS Shell Dlg 2</family>
       <pointsize>8</pointsize>
      </font>
     </property>
@@ -237,6 +239,7 @@
     </property>
     <property name="font">
      <font>
+      <family>MS Shell Dlg 2</family>
       <pointsize>8</pointsize>
      </font>
     </property>
@@ -255,6 +258,7 @@
     </property>
     <property name="font">
      <font>
+      <family>MS Shell Dlg 2</family>
       <pointsize>8</pointsize>
      </font>
     </property>
@@ -325,12 +329,15 @@
     <property name="undoRedoEnabled">
      <bool>false</bool>
     </property>
+    <property name="readOnly">
+     <bool>true</bool>
+    </property>
     <property name="html">
      <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Consolas'; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:15px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; color:#c6ffee;&quot;&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer semper orci nec ligula aliquet consequat. Sed ante risus, euismod gravida mattis sit amet, imperdiet id massa. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Aliquam turpis est, viverra at tincidunt eu, blandit ornare metus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec aliquet porttitor mi, nec pretium orci faucibus vel. Maecenas rutrum justo sit amet lectus egestas, eget fringilla mi elementum. Aliquam eget felis quis diam pulvinar pulvinar at non mi. Sed in augue tincidunt dolor accumsan efficitur.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Consolas','MS Shell Dlg 2'; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:15px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Consolas'; font-size:10pt; color:#c6ffee;&quot;&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer semper orci nec ligula aliquet consequat. Sed ante risus, euismod gravida mattis sit amet, imperdiet id massa. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Aliquam turpis est, viverra at tincidunt eu, blandit ornare metus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec aliquet porttitor mi, nec pretium orci faucibus vel. Maecenas rutrum justo sit amet lectus egestas, eget fringilla mi elementum. Aliquam eget felis quis diam pulvinar pulvinar at non mi. Sed in augue tincidunt dolor accumsan efficitur.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QPlainTextEdit" name="plainTextEdit_0">
@@ -388,11 +395,28 @@ p, li { white-space: pre-wrap; }
     </property>
     <property name="font">
      <font>
+      <family>MS Shell Dlg 2</family>
       <pointsize>8</pointsize>
      </font>
     </property>
     <property name="text">
      <string>Command 0</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="openButton">
+    <property name="geometry">
+     <rect>
+      <x>640</x>
+      <y>440</y>
+      <width>51</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="text">
+     <string>Open</string>
     </property>
    </widget>
   </widget>
@@ -403,7 +427,7 @@ p, li { white-space: pre-wrap; }
      <x>0</x>
      <y>0</y>
      <width>711</width>
-     <height>26</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuSend">
@@ -414,9 +438,20 @@ p, li { white-space: pre-wrap; }
    </widget>
    <addaction name="menuSend"/>
   </widget>
+  <action name="menuConfigure">
+   <property name="text">
+    <string>Configure</string>
+   </property>
+  </action>
   <action name="actionPort">
    <property name="text">
     <string>Port</string>
+   </property>
+   <property name="toolTip">
+    <string>Configure serial port</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
    </property>
   </action>
  </widget>

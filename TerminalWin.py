@@ -1,6 +1,8 @@
 import sys
+import serial
 
 from PyQt5 import QtCore, QtGui, QtWidgets, uic
+from PyQt5.QtWidgets import QMessageBox, QDialog
 from PyQt5.QtGui import QColor
 from SerialPort import SerialPort
 
@@ -9,6 +11,9 @@ Ui_TerminalWin, QtBaseClass = uic.loadUiType(qtCreatorFile)
 
 CommandColor = QColor('#c6ffee')
 ResponseColor = QColor('#fcfed4')
+PortOpenedColor = 'rgb(199, 255, 147)'
+PortClosedColor = 'rgb(177, 43, 43)'
+
 
 class CommandGroup:
     def __init__(self, textEdit, sendButton, commandLabel):
@@ -23,6 +28,7 @@ class TerminalWin(QtWidgets.QMainWindow, Ui_TerminalWin):
         Ui_TerminalWin.__init__(self)
         self.setupUi(self)
 
+        # initialize command groups
         self.commandGroups = [
             CommandGroup(self.plainTextEdit_0, self.sendButton_0, self.label_0),
             CommandGroup(self.plainTextEdit_1, self.sendButton_1, self.label_1),
@@ -30,12 +36,14 @@ class TerminalWin(QtWidgets.QMainWindow, Ui_TerminalWin):
             CommandGroup(self.plainTextEdit_3, self.sendButton_3, self.label_3),
             CommandGroup(self.plainTextEdit_4, self.sendButton_4, self.label_4),
         ]
+        # assign the action to the Send button
         self.sendButton_0.clicked.connect(lambda: self.send(0))
         self.sendButton_1.clicked.connect(lambda: self.send(1))
         self.sendButton_2.clicked.connect(lambda: self.send(2))
         self.sendButton_3.clicked.connect(lambda: self.send(3))
         self.sendButton_4.clicked.connect(lambda: self.send(4))
 
+        # set style of the console window
         font = QtGui.QFont()
         font.setPointSize(12)
         font.setFamily('Consolas')
@@ -43,9 +51,38 @@ class TerminalWin(QtWidgets.QMainWindow, Ui_TerminalWin):
         self.textEdit.setStyleSheet('background-color: rgb(53, 43, 65);')
         self.textEdit.setPlainText('')
 
+        # open COM port
+        self.openButton.clicked.connect(self.closePort)
+        self.openButton.clicked.connect(self.openPort)
         self.portName = "COM12"
         self.serialPort = SerialPort(self.portName)
-        self.serialPort.open()
+        self.openPort()
+
+        # assign actions to menu
+        self.actionPort.triggered.connect(self.configurePort)
+
+
+    def configurePort(self):
+        dialog = QtWidgets.QDialog()
+        dialog.ui = Form()
+        dialog.ui.setupUi(dialog)
+        dialog.exec_()
+        dialog.show()
+
+    def closePort(self):
+        self.serialPort.close()
+        self.openButton.setStyleSheet('background-color:' + PortClosedColor + '; color:white')
+
+
+    def openPort(self):
+        try:
+            self.serialPort.open()
+            self.openButton.setStyleSheet('background-color:' + PortOpenedColor + '; color:black')
+
+        except serial.SerialException:
+            QMessageBox.information(self, 'Info', 'Port ' + self.portName + ' is closed')
+            self.closePort()
+
 
 
     def send(self, commandNum: int):
