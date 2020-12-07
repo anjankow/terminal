@@ -4,7 +4,9 @@ import serial
 from PyQt5 import QtCore, QtGui, QtWidgets, uic
 from PyQt5.QtWidgets import QMessageBox, QDialog
 from PyQt5.QtGui import QColor
+
 from SerialPort import SerialPort
+from PortConfig import PortConfig
 
 qtCreatorFile = "TerminalWin.ui"
 Ui_TerminalWin, QtBaseClass = uic.loadUiType(qtCreatorFile)
@@ -62,7 +64,16 @@ class TerminalWin(QtWidgets.QMainWindow, Ui_TerminalWin):
 
 
     def configurePort(self):
-        pass
+        dialog = PortConfig()
+        ret = dialog.exec_()
+        if ret == QtWidgets.QDialog.Accepted:
+            newPortName = dialog.comboBox.currentText()
+            if newPortName != self.portName:
+                self.serialPort.close()
+                self.portName = dialog.comboBox.currentText()
+                self.openPort()
+                print('Port ' + self.portName + ' is now open')
+
 
     def closePort(self):
         self.serialPort.close()
@@ -71,7 +82,6 @@ class TerminalWin(QtWidgets.QMainWindow, Ui_TerminalWin):
         self.openButton.clicked.connect(self.openPort)
         self.openButton.setText('Open')
         for command in self.commandGroups:
-            print('Button: ' + str(command.sendButton.text()))
             command.sendButton.setDisabled(True)
 
     def openPort(self):
