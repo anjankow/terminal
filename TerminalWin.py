@@ -51,9 +51,8 @@ class TerminalWin(QtWidgets.QMainWindow, Ui_TerminalWin):
         self.textEdit.setStyleSheet('background-color: rgb(53, 43, 65);')
         self.textEdit.setPlainText('')
 
-        # open COM port
+        # configure and open COM port
         self.openButton.clicked.connect(self.closePort)
-        self.openButton.clicked.connect(self.openPort)
         self.portName = "COM12"
         self.serialPort = SerialPort(self.portName)
         self.openPort()
@@ -63,23 +62,31 @@ class TerminalWin(QtWidgets.QMainWindow, Ui_TerminalWin):
 
 
     def configurePort(self):
-        dialog = QtWidgets.QDialog()
-        dialog.ui = Form()
-        dialog.ui.setupUi(dialog)
-        dialog.exec_()
-        dialog.show()
+        pass
 
     def closePort(self):
         self.serialPort.close()
         self.openButton.setStyleSheet('background-color:' + PortClosedColor + '; color:white')
-
+        self.openButton.clicked.disconnect()
+        self.openButton.clicked.connect(self.openPort)
+        self.openButton.setText('Open')
+        for command in self.commandGroups:
+            print('Button: ' + str(command.sendButton.text()))
+            command.sendButton.setDisabled(True)
 
     def openPort(self):
         try:
             self.serialPort.open()
+            # port is successfully open, change the button functionality to 'Close'
             self.openButton.setStyleSheet('background-color:' + PortOpenedColor + '; color:black')
+            self.openButton.clicked.disconnect()
+            self.openButton.clicked.connect(self.closePort)
+            self.openButton.setText('Close')
+            for command in self.commandGroups:
+                command.sendButton.setEnabled(True)
 
         except serial.SerialException:
+            # port can't be opened, call closePort() method to change the button back to Open functionality
             QMessageBox.information(self, 'Info', 'Port ' + self.portName + ' is closed')
             self.closePort()
 
