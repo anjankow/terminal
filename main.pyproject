@@ -1,3 +1,3 @@
 {
-    "files": ["TerminalWin.ui","TerminalWin.py","PortConfig.py","SerialPort.py","PortConfig.ui","main.py","main.pyproject.user"]
+    "files": ["TerminalWin.py","main.py","TerminalWin.ui","CommandEditor.ui","PortConfig.ui","PortConfig.py","main.pyproject.user","SerialPort.py","CommandEditor.py"]
 }
