@@ -29,7 +29,7 @@
     <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
    </property>
   </widget>
-  <widget class="QPlainTextEdit" name="plainTextEdit_0">
+  <widget class="QLineEdit" name="commandText_0">
    <property name="geometry">
     <rect>
      <x>130</x>
@@ -44,50 +44,13 @@
      <pointsize>10</pointsize>
     </font>
    </property>
-   <property name="verticalScrollBarPolicy">
-    <enum>Qt::ScrollBarAlwaysOff</enum>
-   </property>
-   <property name="horizontalScrollBarPolicy">
-    <enum>Qt::ScrollBarAlwaysOff</enum>
-   </property>
-   <property name="lineWrapMode">
-    <enum>QPlainTextEdit::NoWrap</enum>
-   </property>
-   <property name="plainText">
-    <string notr="true"/>
-   </property>
    <property name="placeholderText">
     <string notr="true"/>
    </property>
-  </widget>
-  <widget class="QPlainTextEdit" name="plainTextEdit_3">
-   <property name="geometry">
-    <rect>
-     <x>130</x>
-     <y>310</y>
-     <width>191</width>
-     <height>31</height>
-    </rect>
+   <property name="tabChangesFocus" stdset="0">
+    <bool>true</bool>
    </property>
-   <property name="font">
-    <font>
-     <family>Consolas</family>
-     <pointsize>10</pointsize>
-    </font>
-   </property>
-   <property name="verticalScrollBarPolicy">
-    <enum>Qt::ScrollBarAlwaysOff</enum>
-   </property>
-   <property name="horizontalScrollBarPolicy">
-    <enum>Qt::ScrollBarAlwaysOff</enum>
-   </property>
-   <property name="lineWrapMode">
-    <enum>QPlainTextEdit::NoWrap</enum>
-   </property>
-   <property name="plainText">
-    <string notr="true"/>
-   </property>
-   <property name="placeholderText">
+   <property name="plainText" stdset="0">
     <string notr="true"/>
    </property>
   </widget>
@@ -129,37 +92,6 @@
     <string>Command 0</string>
    </property>
   </widget>
-  <widget class="QPlainTextEdit" name="plainTextEdit_1">
-   <property name="geometry">
-    <rect>
-     <x>130</x>
-     <y>230</y>
-     <width>191</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>Consolas</family>
-     <pointsize>10</pointsize>
-    </font>
-   </property>
-   <property name="verticalScrollBarPolicy">
-    <enum>Qt::ScrollBarAlwaysOff</enum>
-   </property>
-   <property name="horizontalScrollBarPolicy">
-    <enum>Qt::ScrollBarAlwaysOff</enum>
-   </property>
-   <property name="lineWrapMode">
-    <enum>QPlainTextEdit::NoWrap</enum>
-   </property>
-   <property name="plainText">
-    <string notr="true"/>
-   </property>
-   <property name="placeholderText">
-    <string notr="true"/>
-   </property>
-  </widget>
   <widget class="QLabel" name="label_2">
    <property name="geometry">
     <rect>
@@ -198,68 +130,6 @@
     <string>Command 4</string>
    </property>
   </widget>
-  <widget class="QPlainTextEdit" name="plainTextEdit_2">
-   <property name="geometry">
-    <rect>
-     <x>130</x>
-     <y>270</y>
-     <width>191</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>Consolas</family>
-     <pointsize>10</pointsize>
-    </font>
-   </property>
-   <property name="verticalScrollBarPolicy">
-    <enum>Qt::ScrollBarAlwaysOff</enum>
-   </property>
-   <property name="horizontalScrollBarPolicy">
-    <enum>Qt::ScrollBarAlwaysOff</enum>
-   </property>
-   <property name="lineWrapMode">
-    <enum>QPlainTextEdit::NoWrap</enum>
-   </property>
-   <property name="plainText">
-    <string notr="true"/>
-   </property>
-   <property name="placeholderText">
-    <string notr="true"/>
-   </property>
-  </widget>
-  <widget class="QPlainTextEdit" name="plainTextEdit_4">
-   <property name="geometry">
-    <rect>
-     <x>130</x>
-     <y>350</y>
-     <width>191</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>Consolas</family>
-     <pointsize>10</pointsize>
-    </font>
-   </property>
-   <property name="verticalScrollBarPolicy">
-    <enum>Qt::ScrollBarAlwaysOff</enum>
-   </property>
-   <property name="horizontalScrollBarPolicy">
-    <enum>Qt::ScrollBarAlwaysOff</enum>
-   </property>
-   <property name="lineWrapMode">
-    <enum>QPlainTextEdit::NoWrap</enum>
-   </property>
-   <property name="plainText">
-    <string notr="true"/>
-   </property>
-   <property name="placeholderText">
-    <string notr="true"/>
-   </property>
-  </widget>
   <widget class="QLabel" name="label_1">
    <property name="geometry">
     <rect>
@@ -279,7 +149,7 @@
     <string>Command 1</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit">
+  <widget class="QLineEdit" name="configName">
    <property name="geometry">
     <rect>
      <x>210</x>
@@ -289,131 +159,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QPlainTextEdit" name="plainTextEdit_5">
-   <property name="geometry">
-    <rect>
-     <x>370</x>
-     <y>230</y>
-     <width>191</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>Consolas</family>
-     <pointsize>10</pointsize>
-    </font>
-   </property>
-   <property name="verticalScrollBarPolicy">
-    <enum>Qt::ScrollBarAlwaysOff</enum>
-   </property>
-   <property name="horizontalScrollBarPolicy">
-    <enum>Qt::ScrollBarAlwaysOff</enum>
-   </property>
-   <property name="lineWrapMode">
-    <enum>QPlainTextEdit::NoWrap</enum>
-   </property>
-   <property name="plainText">
-    <string notr="true"/>
-   </property>
-   <property name="placeholderText">
-    <string notr="true"/>
-   </property>
-  </widget>
-  <widget class="QPlainTextEdit" name="plainTextEdit_6">
-   <property name="geometry">
-    <rect>
-     <x>370</x>
-     <y>270</y>
-     <width>191</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>Consolas</family>
-     <pointsize>10</pointsize>
-    </font>
-   </property>
-   <property name="verticalScrollBarPolicy">
-    <enum>Qt::ScrollBarAlwaysOff</enum>
-   </property>
-   <property name="horizontalScrollBarPolicy">
-    <enum>Qt::ScrollBarAlwaysOff</enum>
-   </property>
-   <property name="lineWrapMode">
-    <enum>QPlainTextEdit::NoWrap</enum>
-   </property>
-   <property name="plainText">
-    <string notr="true"/>
-   </property>
-   <property name="placeholderText">
-    <string notr="true"/>
-   </property>
-  </widget>
-  <widget class="QPlainTextEdit" name="plainTextEdit_7">
-   <property name="geometry">
-    <rect>
-     <x>370</x>
-     <y>310</y>
-     <width>191</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>Consolas</family>
-     <pointsize>10</pointsize>
-    </font>
-   </property>
-   <property name="verticalScrollBarPolicy">
-    <enum>Qt::ScrollBarAlwaysOff</enum>
-   </property>
-   <property name="horizontalScrollBarPolicy">
-    <enum>Qt::ScrollBarAlwaysOff</enum>
-   </property>
-   <property name="lineWrapMode">
-    <enum>QPlainTextEdit::NoWrap</enum>
-   </property>
-   <property name="plainText">
-    <string notr="true"/>
-   </property>
-   <property name="placeholderText">
-    <string notr="true"/>
-   </property>
-  </widget>
-  <widget class="QPlainTextEdit" name="plainTextEdit_8">
-   <property name="geometry">
-    <rect>
-     <x>370</x>
-     <y>350</y>
-     <width>191</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>Consolas</family>
-     <pointsize>10</pointsize>
-    </font>
-   </property>
-   <property name="verticalScrollBarPolicy">
-    <enum>Qt::ScrollBarAlwaysOff</enum>
-   </property>
-   <property name="horizontalScrollBarPolicy">
-    <enum>Qt::ScrollBarAlwaysOff</enum>
-   </property>
-   <property name="lineWrapMode">
-    <enum>QPlainTextEdit::NoWrap</enum>
-   </property>
-   <property name="plainText">
-    <string notr="true"/>
-   </property>
-   <property name="placeholderText">
-    <string notr="true"/>
-   </property>
-  </widget>
-  <widget class="QPlainTextEdit" name="plainTextEdit_9">
+  <widget class="QLineEdit" name="comLabel_0">
    <property name="geometry">
     <rect>
      <x>370</x>
@@ -428,19 +174,13 @@
      <pointsize>10</pointsize>
     </font>
    </property>
-   <property name="verticalScrollBarPolicy">
-    <enum>Qt::ScrollBarAlwaysOff</enum>
-   </property>
-   <property name="horizontalScrollBarPolicy">
-    <enum>Qt::ScrollBarAlwaysOff</enum>
-   </property>
-   <property name="lineWrapMode">
-    <enum>QPlainTextEdit::NoWrap</enum>
-   </property>
-   <property name="plainText">
+   <property name="placeholderText">
     <string notr="true"/>
    </property>
-   <property name="placeholderText">
+   <property name="tabChangesFocus" stdset="0">
+    <bool>true</bool>
+   </property>
+   <property name="plainText" stdset="0">
     <string notr="true"/>
    </property>
   </widget>
@@ -501,10 +241,10 @@
     <string>Command label</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QPushButton" name="loadButton">
    <property name="geometry">
     <rect>
-     <x>390</x>
+     <x>360</x>
      <y>30</y>
      <width>93</width>
      <height>28</height>
@@ -517,14 +257,243 @@
   <widget class="QComboBox" name="comboBox">
    <property name="geometry">
     <rect>
-     <x>130</x>
+     <x>80</x>
      <y>30</y>
-     <width>241</width>
+     <width>261</width>
      <height>31</height>
     </rect>
    </property>
   </widget>
+  <widget class="QPushButton" name="deleteButton">
+   <property name="geometry">
+    <rect>
+     <x>470</x>
+     <y>30</y>
+     <width>93</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Delete</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="commandText_1">
+   <property name="geometry">
+    <rect>
+     <x>130</x>
+     <y>230</y>
+     <width>191</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Consolas</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+   <property name="placeholderText">
+    <string notr="true"/>
+   </property>
+   <property name="tabChangesFocus" stdset="0">
+    <bool>true</bool>
+   </property>
+   <property name="plainText" stdset="0">
+    <string notr="true"/>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="commandText_2">
+   <property name="geometry">
+    <rect>
+     <x>130</x>
+     <y>270</y>
+     <width>191</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Consolas</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+   <property name="placeholderText">
+    <string notr="true"/>
+   </property>
+   <property name="tabChangesFocus" stdset="0">
+    <bool>true</bool>
+   </property>
+   <property name="plainText" stdset="0">
+    <string notr="true"/>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="commandText_3">
+   <property name="geometry">
+    <rect>
+     <x>130</x>
+     <y>310</y>
+     <width>191</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Consolas</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+   <property name="placeholderText">
+    <string notr="true"/>
+   </property>
+   <property name="tabChangesFocus" stdset="0">
+    <bool>true</bool>
+   </property>
+   <property name="plainText" stdset="0">
+    <string notr="true"/>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="commandText_4">
+   <property name="geometry">
+    <rect>
+     <x>130</x>
+     <y>350</y>
+     <width>191</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Consolas</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+   <property name="placeholderText">
+    <string notr="true"/>
+   </property>
+   <property name="tabChangesFocus" stdset="0">
+    <bool>true</bool>
+   </property>
+   <property name="plainText" stdset="0">
+    <string notr="true"/>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="comLabel_1">
+   <property name="geometry">
+    <rect>
+     <x>370</x>
+     <y>230</y>
+     <width>191</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Consolas</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+   <property name="placeholderText">
+    <string notr="true"/>
+   </property>
+   <property name="tabChangesFocus" stdset="0">
+    <bool>true</bool>
+   </property>
+   <property name="plainText" stdset="0">
+    <string notr="true"/>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="comLabel_2">
+   <property name="geometry">
+    <rect>
+     <x>370</x>
+     <y>270</y>
+     <width>191</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Consolas</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+   <property name="placeholderText">
+    <string notr="true"/>
+   </property>
+   <property name="tabChangesFocus" stdset="0">
+    <bool>true</bool>
+   </property>
+   <property name="plainText" stdset="0">
+    <string notr="true"/>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="comLabel_3">
+   <property name="geometry">
+    <rect>
+     <x>370</x>
+     <y>310</y>
+     <width>191</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Consolas</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+   <property name="placeholderText">
+    <string notr="true"/>
+   </property>
+   <property name="tabChangesFocus" stdset="0">
+    <bool>true</bool>
+   </property>
+   <property name="plainText" stdset="0">
+    <string notr="true"/>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="comLabel_4">
+   <property name="geometry">
+    <rect>
+     <x>370</x>
+     <y>350</y>
+     <width>191</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Consolas</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+   <property name="placeholderText">
+    <string notr="true"/>
+   </property>
+   <property name="tabChangesFocus" stdset="0">
+    <bool>true</bool>
+   </property>
+   <property name="plainText" stdset="0">
+    <string notr="true"/>
+   </property>
+  </widget>
  </widget>
+ <tabstops>
+  <tabstop>comboBox</tabstop>
+  <tabstop>loadButton</tabstop>
+  <tabstop>deleteButton</tabstop>
+  <tabstop>configName</tabstop>
+  <tabstop>commandText_0</tabstop>
+  <tabstop>comLabel_0</tabstop>
+  <tabstop>commandText_1</tabstop>
+  <tabstop>comLabel_1</tabstop>
+  <tabstop>commandText_2</tabstop>
+  <tabstop>comLabel_2</tabstop>
+  <tabstop>commandText_3</tabstop>
+  <tabstop>comLabel_3</tabstop>
+  <tabstop>commandText_4</tabstop>
+  <tabstop>comLabel_4</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>

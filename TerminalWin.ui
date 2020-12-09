@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>711</width>
-    <height>590</height>
+    <width>719</width>
+    <height>658</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,8 +17,8 @@
    <widget class="QPlainTextEdit" name="plainTextEdit_1">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>360</y>
+      <x>130</x>
+      <y>410</y>
       <width>191</width>
       <height>31</height>
      </rect>
@@ -48,8 +48,8 @@
    <widget class="QPlainTextEdit" name="plainTextEdit_2">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>400</y>
+      <x>130</x>
+      <y>450</y>
       <width>191</width>
       <height>31</height>
      </rect>
@@ -79,8 +79,8 @@
    <widget class="QPlainTextEdit" name="plainTextEdit_3">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>440</y>
+      <x>130</x>
+      <y>490</y>
       <width>191</width>
       <height>31</height>
      </rect>
@@ -110,8 +110,8 @@
    <widget class="QPlainTextEdit" name="plainTextEdit_4">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>480</y>
+      <x>130</x>
+      <y>530</y>
       <width>191</width>
       <height>31</height>
      </rect>
@@ -144,8 +144,8 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>230</x>
-      <y>360</y>
+      <x>340</x>
+      <y>410</y>
       <width>71</width>
       <height>28</height>
      </rect>
@@ -157,8 +157,8 @@
    <widget class="QPushButton" name="sendButton_2">
     <property name="geometry">
      <rect>
-      <x>230</x>
-      <y>400</y>
+      <x>340</x>
+      <y>450</y>
       <width>71</width>
       <height>28</height>
      </rect>
@@ -170,8 +170,8 @@
    <widget class="QPushButton" name="sendButton_3">
     <property name="geometry">
      <rect>
-      <x>230</x>
-      <y>440</y>
+      <x>340</x>
+      <y>490</y>
       <width>71</width>
       <height>28</height>
      </rect>
@@ -183,8 +183,8 @@
    <widget class="QPushButton" name="sendButton_4">
     <property name="geometry">
      <rect>
-      <x>230</x>
-      <y>480</y>
+      <x>340</x>
+      <y>530</y>
       <width>71</width>
       <height>28</height>
      </rect>
@@ -196,11 +196,17 @@
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>320</x>
-      <y>400</y>
-      <width>281</width>
-      <height>31</height>
+      <x>430</x>
+      <y>450</y>
+      <width>69</width>
+      <height>21</height>
      </rect>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>281</width>
+      <height>16777215</height>
+     </size>
     </property>
     <property name="font">
      <font>
@@ -215,11 +221,17 @@
    <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
-      <x>320</x>
-      <y>440</y>
-      <width>281</width>
-      <height>31</height>
+      <x>430</x>
+      <y>490</y>
+      <width>69</width>
+      <height>21</height>
      </rect>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>281</width>
+      <height>16777215</height>
+     </size>
     </property>
     <property name="font">
      <font>
@@ -234,11 +246,17 @@
    <widget class="QLabel" name="label_4">
     <property name="geometry">
      <rect>
-      <x>320</x>
-      <y>480</y>
-      <width>281</width>
-      <height>31</height>
+      <x>430</x>
+      <y>530</y>
+      <width>69</width>
+      <height>21</height>
      </rect>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>281</width>
+      <height>16777215</height>
+     </size>
     </property>
     <property name="font">
      <font>
@@ -253,11 +271,17 @@
    <widget class="QLabel" name="label_1">
     <property name="geometry">
      <rect>
-      <x>320</x>
-      <y>360</y>
-      <width>281</width>
-      <height>31</height>
+      <x>430</x>
+      <y>410</y>
+      <width>69</width>
+      <height>21</height>
      </rect>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>281</width>
+      <height>16777215</height>
+     </size>
     </property>
     <property name="font">
      <font>
@@ -272,8 +296,8 @@
    <widget class="QPushButton" name="editButton">
     <property name="geometry">
      <rect>
-      <x>640</x>
-      <y>360</y>
+      <x>20</x>
+      <y>370</y>
       <width>51</width>
       <height>71</height>
      </rect>
@@ -285,7 +309,7 @@
    <widget class="QPushButton" name="clearButton">
     <property name="geometry">
      <rect>
-      <x>640</x>
+      <x>20</x>
       <y>320</y>
       <width>51</width>
       <height>31</height>
@@ -339,15 +363,15 @@
      <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Consolas','MS Shell Dlg 2'; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:15px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Consolas'; font-size:10pt; color:#c6ffee;&quot;&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer semper orci nec ligula aliquet consequat. Sed ante risus, euismod gravida mattis sit amet, imperdiet id massa. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Aliquam turpis est, viverra at tincidunt eu, blandit ornare metus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec aliquet porttitor mi, nec pretium orci faucibus vel. Maecenas rutrum justo sit amet lectus egestas, eget fringilla mi elementum. Aliquam eget felis quis diam pulvinar pulvinar at non mi. Sed in augue tincidunt dolor accumsan efficitur.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Consolas'; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:15px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; color:#c6ffee;&quot;&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer semper orci nec ligula aliquet consequat. Sed ante risus, euismod gravida mattis sit amet, imperdiet id massa. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Aliquam turpis est, viverra at tincidunt eu, blandit ornare metus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec aliquet porttitor mi, nec pretium orci faucibus vel. Maecenas rutrum justo sit amet lectus egestas, eget fringilla mi elementum. Aliquam eget felis quis diam pulvinar pulvinar at non mi. Sed in augue tincidunt dolor accumsan efficitur.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QPlainTextEdit" name="plainTextEdit_0">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>320</y>
+      <x>130</x>
+      <y>370</y>
       <width>191</width>
       <height>31</height>
      </rect>
@@ -380,8 +404,8 @@ p, li { white-space: pre-wrap; }
     </property>
     <property name="geometry">
      <rect>
-      <x>230</x>
-      <y>320</y>
+      <x>340</x>
+      <y>370</y>
       <width>71</width>
       <height>28</height>
      </rect>
@@ -393,11 +417,17 @@ p, li { white-space: pre-wrap; }
    <widget class="QLabel" name="label_0">
     <property name="geometry">
      <rect>
-      <x>320</x>
-      <y>320</y>
-      <width>281</width>
-      <height>31</height>
+      <x>430</x>
+      <y>370</y>
+      <width>69</width>
+      <height>21</height>
      </rect>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>281</width>
+      <height>16777215</height>
+     </size>
     </property>
     <property name="font">
      <font>
@@ -412,8 +442,8 @@ p, li { white-space: pre-wrap; }
    <widget class="QPushButton" name="openButton">
     <property name="geometry">
      <rect>
-      <x>640</x>
-      <y>440</y>
+      <x>20</x>
+      <y>450</y>
       <width>51</width>
       <height>41</height>
      </rect>
@@ -425,6 +455,16 @@ p, li { white-space: pre-wrap; }
      <string>Open</string>
     </property>
    </widget>
+   <widget class="QComboBox" name="comboBox">
+    <property name="geometry">
+     <rect>
+      <x>130</x>
+      <y>320</y>
+      <width>371</width>
+      <height>22</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <widget class="QMenuBar" name="menuBar">
@@ -432,8 +472,8 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>711</width>
-     <height>19</height>
+     <width>719</width>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuSend">

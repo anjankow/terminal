@@ -18,6 +18,7 @@ ResponseColor = QColor('#fcfed4')
 PortOpenedColor = 'rgb(199, 255, 147)'
 PortClosedColor = 'rgb(177, 43, 43)'
 
+commandConfigFile = 'commandConfig.xml'
 
 class CommandGroup:
     def __init__(self, textEdit, sendButton, commandLabel):
@@ -47,6 +48,13 @@ class TerminalWin(QtWidgets.QMainWindow, Ui_TerminalWin):
         self.sendButton_3.clicked.connect(lambda: self.send(3))
         self.sendButton_4.clicked.connect(lambda: self.send(4))
 
+        # assign actions to the other buttons
+        self.openButton.clicked.connect(self.closePort)
+        self.editButton.clicked.connect(self.editCommands)
+
+        # assign actions to menu
+        self.actionPort.triggered.connect(self.configurePort)
+
         # set style of the console window
         font = QtGui.QFont()
         font.setPointSize(12)
@@ -69,15 +77,18 @@ class TerminalWin(QtWidgets.QMainWindow, Ui_TerminalWin):
         self.serialPort = SerialPort(portName)
 
         # open the port if any or close it to set GUI to the corresponding state
-        self.openButton.clicked.connect(self.closePort)
         if portName != '':
             self.openPort()
         else:
             self.updateGuiOnClosedPort()
 
-        # assign actions to menu
-        self.actionPort.triggered.connect(self.configurePort)
+        # load the commands from the config file
+        self.commandHolder = CommandHolder(commandConfigFile)
 
+
+    def editCommands(self):
+        dialog = CommandEditor(self.commandHolder)
+        ret = dialog.exec_()
 
     def configurePort(self):
         dialog = PortConfig()
