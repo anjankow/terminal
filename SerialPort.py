@@ -44,6 +44,10 @@ class SerialPort:
     def write(self, data: str):
         self.serialCom.write(str.encode(data))
 
+    def readByte(self):
+        self.serialCom.timeout = None
+        return self.serialCom.read(size=1)
+
 
 
 if __name__ == "__main__":
