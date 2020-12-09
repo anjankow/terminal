@@ -21,6 +21,14 @@ class SerialPort:
         self.serialCom.port = portName
         self.serialCom.timeout = 0.5
 
+    def setPortName(self, name: str):
+        if self.serialCom.is_open:
+            self.serialCom.close()
+        self.serialCom.port = name
+
+    def getPortName(self):
+        return self.serialCom.port
+
     def close(self):
         self.serialCom.close()
 
@@ -32,6 +40,9 @@ class SerialPort:
     def writeRead(self, data: str):
         self.serialCom.write(str.encode(data))
         return self.serialCom.read_until()
+
+    def write(self, data: str):
+        self.serialCom.write(str.encode(data))
 
 
 

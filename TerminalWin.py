@@ -1,11 +1,13 @@
 import sys
 import serial
+from threading import Lock
+from threading import Thread
 
 from PyQt5 import QtCore, QtGui, QtWidgets, uic
 from PyQt5.QtWidgets import QMessageBox, QDialog
 from PyQt5.QtGui import QColor
 
-from SerialPort import SerialPort
+from SerialPort import SerialPort, findPorts
 from PortConfig import PortConfig
 
 qtCreatorFile = "TerminalWin.ui"
@@ -53,11 +55,24 @@ class TerminalWin(QtWidgets.QMainWindow, Ui_TerminalWin):
         self.textEdit.setStyleSheet('background-color: rgb(53, 43, 65);')
         self.textEdit.setPlainText('')
 
-        # configure and open COM port
+        # find available COM port
+        ports = findPorts()
+        if len(ports) > 0:
+            portName = ports[0]
+        else:
+            portName = ''
+        self.serialPort = SerialPort(portName)
+        # open the port if any or close it to set GUI to the corresponding state
         self.openButton.clicked.connect(self.closePort)
-        self.portName = "COM12"
-        self.serialPort = SerialPort(self.portName)
-        self.openPort()
+        if portName != '':
+            self.openPort()
+        else:
+            self.closePort()
+
+        # start reading thread
+        self.continueRead = False
+        self.dataLock = Lock()
+        self.readingThread = Thread(target=self.readFromPort, daemon=True)
 
         # assign actions to menu
         self.actionPort.triggered.connect(self.configurePort)
@@ -68,12 +83,11 @@ class TerminalWin(QtWidgets.QMainWindow, Ui_TerminalWin):
         ret = dialog.exec_()
         if ret == QtWidgets.QDialog.Accepted:
             newPortName = dialog.comboBox.currentText()
-            if newPortName != self.portName:
+            if newPortName != self.serialPort.getPortName():
                 self.serialPort.close()
-                self.portName = dialog.comboBox.currentText()
+                self.serialPort.setPortName(dialog.comboBox.currentText())
                 self.openPort()
-                print('Port ' + self.portName + ' is now open')
-
+                print('Port ' + self.serialPort.getPortName() + ' is now open')
 
     def closePort(self):
         self.serialPort.close()
@@ -87,6 +101,7 @@ class TerminalWin(QtWidgets.QMainWindow, Ui_TerminalWin):
     def openPort(self):
         try:
             self.serialPort.open()
+            self.continueRead = True
             # port is successfully open, change the button functionality to 'Close'
             self.openButton.setStyleSheet('background-color:' + PortOpenedColor + '; color:black')
             self.openButton.clicked.disconnect()
@@ -95,33 +110,42 @@ class TerminalWin(QtWidgets.QMainWindow, Ui_TerminalWin):
             for command in self.commandGroups:
                 command.sendButton.setEnabled(True)
 
+
         except serial.SerialException:
             # port can't be opened, call closePort() method to change the button back to Open functionality
-            QMessageBox.information(self, 'Info', 'Port ' + self.portName + ' is closed')
+            QMessageBox.information(self, 'Info', 'Port ' + self.serialPort.getPortName() + ' is closed')
             self.closePort()
-
-
 
     def send(self, commandNum: int):
         # get the command from the text editor
         command = self.commandGroups[commandNum].commandTextEdit.toPlainText()
         if command != "":
-            # print the command on the textEdit
-            print("Sending command %i: %s", commandNum, command)
-            self.textEdit.setTextColor(CommandColor)
-            self.textEdit.append(command)
-
             # write and read from the serial port
-            bytes = self.serialPort.writeRead(command)
+            bytes = self.serialPort.write(command)
+            with self.dataLock:
+                # print the command on the textEdit
+                print("Sending command %i: %s", commandNum, command)
+                self.textEdit.setTextColor(CommandColor)
+                self.textEdit.append(command)
 
-            # print the response
-            response = ""
-            for byte in bytes:
-                response += format(byte, 'x') + " "
-            print("Response:", response)
-            self.textEdit.setTextColor(ResponseColor)
-            self.textEdit.append(response)
+#            # print the response
+#            response = ""
+#            for byte in bytes:
+#                response += format(byte, 'x') + " "
+#            print("Response:", response)
+#            self.textEdit.setTextColor(ResponseColor)
+#            self.textEdit.append(response)
 
+
+    def readFromPort(self):
+        while True:
+            if self.continueRead:
+                readData = self.serialPort.read(size=1)
+                data = format(readData, 'x') + " "
+                with self.dataLock:
+                    print("Response:", response)
+                    self.textEdit.setTextColor(ResponseColor)
+                    self.textEdit.append(response)
 
 
 
