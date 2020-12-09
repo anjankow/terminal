@@ -31,63 +31,72 @@ class CommandEditor(QDialog, Ui_CommandEditor):
         # initialize the rest of the members
         self.commandHolder = commandHolder
         self.updateComboBox()
-        self.textBoxes = []
+        self.textBoxes = self.getTextBoxesOnInit()
+
+
+    def getTextBoxesOnInit(self):
         # gather all the command textEdits and corresponding labels
+        textBoxes = []
         for i in range(0, 10): # let's say 10 in case if there is more in the future
             command = self.findChild(QLineEdit, 'commandText_' + str(i))
             label = self.findChild(QLineEdit, 'comLabel_' + str(i))
             if command != None and label != None:
-                self.textBoxes.append(CommandTextBoxes(command, label))
+                textBoxes.append(CommandTextBoxes(command, label))
             else:
                 break
+        return textBoxes
 
     def updateComboBox(self):
-        for commandSet in self.commandHolder.getAll():
-            self.comboBox.addItem(commandSet.name)
+        for key in (self.commandHolder.getAll()).keys():
+            self.comboBox.addItem(key)
 
-    def assignTextBoxes(self, commandSet: CommandSet):
-        self.configName.setText(commandSet.name)
+    def assignTextBoxes(self, name: str, commandSet):
+        self.configName.setText(name)
+        # clear all the text boxes
+        for textBoxSet in self.textBoxes:
+            textBoxSet.command.clear()
+            textBoxSet.label.clear()
         # assign all text boxes according to commandSet configuration
-        for i in range(0, len(commandSet.commandList)):
-            self.textBoxes[i].command.setText(commandSet.commandList[i].content)
-            self.textBoxes[i].label.setText(commandSet.commandList[i].label)
+        for i in range(0, len(commandSet)):
+            self.textBoxes[i].command.setText(commandSet[i].content)
+            self.textBoxes[i].label.setText(commandSet[i].label)
 
     def getDataFromTextBoxes(self):
-        name = self.configName.text()
-        if name == '':
-            name = 'New commands'
-
         commandList = []
         for commandTextBoxes in self.textBoxes:
             commandText = (commandTextBoxes.command.text()).rstrip().lstrip()
             labelText = (commandTextBoxes.label.text()).rstrip().lstrip()
             if commandText != '':
                 commandList.append(Command(commandText, labelText))
-
         # return something only is there are any commands given
         retVal = None
         if len(commandList) > 0:
-            retVal = CommandSet(name, commandList)
+            retVal = commandList
         return retVal
 
     def saveNewConfig(self):
-        commandSet = self.getDataFromTextBoxes()
-        if commandSet:
-            self.commandHolder.add(commandSet)
+        name = self.configName.text()
+        if name == '':
+            name = 'New commands'
+        commandList = self.getDataFromTextBoxes()
+        if commandList:
+            self.commandHolder.add(name, commandList)
 
     def loadConfig(self):
         name = self.comboBox.currentText()
         if name != '':
             commandSet = self.commandHolder.getCommandSet(name)
-            self.assignTextBoxes(commandSet)
+            self.assignTextBoxes(name, commandSet)
 
     def deleteConfig(self):
-        pass
+        name = self.comboBox.currentText()
+        self.commandHolder.delete(name)
+        self.updateComboBox()
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     commandHolder = CommandHolder()
-    for i in range(0,4):
+    for i in range(0,5):
         dialog = CommandEditor(commandHolder)
         ret = dialog.exec_()
 
