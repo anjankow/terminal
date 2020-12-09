@@ -1,16 +1,19 @@
 # This Python file uses the following encoding: utf-8
 import typing
+from lxml import etree
 
 class Command:
-    def __init__(self, content, label):
+    def __init__(self, content, label=''):
         self.content = content
         self.label = label
 
 class CommandHolder:
-    def __init__(self):
+    def __init__(self, xmlFile):
         # one command set consists of a name (key)
         # and a list of commands (value)
         self.__allCommandSets = {}
+        self.xmlFile = xmlFile
+        self.loadFromXml()
 
     def add(self, name, newCommandSet):
         self.__allCommandSets[name] = newCommandSet
@@ -28,19 +31,56 @@ class CommandHolder:
     def getAll(self):
         return self.__allCommandSets
 
-    def saveInXml(self):
-        pass
+    def saveToXml(self):
+        '''
+        The XML file is stored in the following format:
+        <commandConfig>
+                <commandSet name=...>
+                        <command label=...> ... </command>
+                        <command label=...> ... </command>
+                </commandSet>
+                <commandSet name=...>
+                        <command label=...> ... </command>
+                </commandSet>
+        </commandConfig>
+        '''
+        root = etree.Element('commandSets')
+        print(len(self.__allCommandSets))
+        for key in self.__allCommandSets:
+            commandSet = etree.SubElement(root, 'commandSet', attrib={'name':key})
+            for command in self.__allCommandSets[key]:
+                # iterate on Command objects from the list
+                xmlCommand = etree.SubElement(commandSet, 'command', attrib={'label':command.label})
+                xmlCommand.text = command.content
+
+        print('Saving commands configuration')
+        etree.dump(root)
+
+        with open(self.xmlFile, 'w') as file:
+           file.write(etree.tostring(root, encoding='unicode', pretty_print = True))
 
     def loadFromXml(self):
-        pass
+        '''
+        The XML file is stored in the following format:
+        <commandConfig>
+                <commandSet name=...>
+                        <command label=...> ... </command>
+                        <command label=...> ... </command>
+                </commandSet>
+                <commandSet name=...>
+                        <command label=...> ... </command>
+                </commandSet>
+        </commandConfig>
+        '''
+        tree = etree.parse(self.xmlFile)
+        root = tree.getroot()
+        for child in root:
+            self.__allCommandSets[child.attrib['name']] = []
+            for command in child:
+                self.__allCommandSets[child.attrib['name']].append(Command(command.text, command.attrib['label']))
+
 
 if __name__ == "__main__":
-    ch = CommandHolder()
-    ch.add('lalalalpp', 'sssss')
-    ch.delete('ooo')
-    ch.add('lalalal', 'ppppp')
-    com = ch.getCommandSet('lalalal')
-    print(com)
-    ch.delete('lalalal')
-    com = ch.getCommandSet('lalalal')
-    print(com)
+    ch = CommandHolder('pleple.xml')
+    ch.saveInXml()
+

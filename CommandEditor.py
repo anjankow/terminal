@@ -1,6 +1,6 @@
 # This Python file uses the following encoding: utf-8
 import sys
-import xml.etree.ElementTree as ET
+import xml.etree.ElementTree as ETree
 
 from PyQt5 import QtCore, QtGui, QtWidgets, uic
 from PyQt5.QtWidgets import QDialog, QLineEdit
@@ -95,9 +95,10 @@ class CommandEditor(QDialog, Ui_CommandEditor):
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
-    commandHolder = CommandHolder()
-    for i in range(0,5):
+    commandHolder = CommandHolder('pleple.xml')
+    for i in range(0,3):
         dialog = CommandEditor(commandHolder)
         ret = dialog.exec_()
+    commandHolder.saveToXml()
 
     sys.exit(app.exec_())
