@@ -9,6 +9,8 @@ from PyQt5.QtGui import QColor
 
 from SerialPort import SerialPort, findPorts
 from PortConfig import PortConfig
+from CommandHolder import CommandHolder
+from CommandEditor import CommandEditor
 
 qtCreatorFile = "TerminalWin.ui"
 Ui_TerminalWin, QtBaseClass = uic.loadUiType(qtCreatorFile)
@@ -35,11 +37,11 @@ class TerminalWin(QtWidgets.QMainWindow, Ui_TerminalWin):
 
         # initialize command groups
         self.commandGroups = [
-            CommandGroup(self.plainTextEdit_0, self.sendButton_0, self.label_0),
-            CommandGroup(self.plainTextEdit_1, self.sendButton_1, self.label_1),
-            CommandGroup(self.plainTextEdit_2, self.sendButton_2, self.label_2),
-            CommandGroup(self.plainTextEdit_3, self.sendButton_3, self.label_3),
-            CommandGroup(self.plainTextEdit_4, self.sendButton_4, self.label_4),
+            CommandGroup(self.lineEdit_0, self.sendButton_0, self.label_0),
+            CommandGroup(self.lineEdit_1, self.sendButton_1, self.label_1),
+            CommandGroup(self.lineEdit_2, self.sendButton_2, self.label_2),
+            CommandGroup(self.lineEdit_3, self.sendButton_3, self.label_3),
+            CommandGroup(self.lineEdit_4, self.sendButton_4, self.label_4),
         ]
         # assign the action to the Send button
         self.sendButton_0.clicked.connect(lambda: self.send(0))
@@ -89,6 +91,24 @@ class TerminalWin(QtWidgets.QMainWindow, Ui_TerminalWin):
     def editCommands(self):
         dialog = CommandEditor(self.commandHolder)
         ret = dialog.exec_()
+        # if the user pressed OK, fill text boxes with the given command set
+        if ret == QtWidgets.QDialog.Accepted:
+            # clear all the current text boxes
+            for i in range(0, len(self.commandGroups)):
+                self.commandGroups[i].commandTextEdit.clear()
+                self.commandGroups[i].commandLabel.setText('Command ' + str(i))
+
+            # get the current commands from the dialog
+            currentName = dialog.configName.text()
+            if currentName == '':
+                currentName = dialog.defaultConfigName
+
+            i = 0
+            for command in self.commandHolder.getCommandSet(currentName):
+                self.commandGroups[i].commandTextEdit.setText(command.content)
+                self.commandGroups[i].commandLabel.setText(command.label)
+                i += 1
+
 
     def configurePort(self):
         dialog = PortConfig()
@@ -96,7 +116,7 @@ class TerminalWin(QtWidgets.QMainWindow, Ui_TerminalWin):
         if ret == QtWidgets.QDialog.Accepted:
             newPortName = dialog.comboBox.currentText()
             if newPortName != self.serialPort.getPortName():
-                self.closePort(self)
+                self.closePort()
                 self.serialPort.setPortName(dialog.comboBox.currentText())
                 self.openPort()
                 print('Port ' + self.serialPort.getPortName() + ' is now open')

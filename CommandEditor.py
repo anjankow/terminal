@@ -32,6 +32,7 @@ class CommandEditor(QDialog, Ui_CommandEditor):
         self.commandHolder = commandHolder
         self.updateComboBox()
         self.textBoxes = self.getTextBoxesOnInit()
+        self.defaultConfigName = 'New commands'
 
 
     def getTextBoxesOnInit(self):
@@ -47,6 +48,7 @@ class CommandEditor(QDialog, Ui_CommandEditor):
         return textBoxes
 
     def updateComboBox(self):
+        self.comboBox.clear()
         for key in (self.commandHolder.getAll()).keys():
             self.comboBox.addItem(key)
 
@@ -77,7 +79,7 @@ class CommandEditor(QDialog, Ui_CommandEditor):
     def saveNewConfig(self):
         name = self.configName.text()
         if name == '':
-            name = 'New commands'
+            name = self.defaultConfigName
         commandList = self.getDataFromTextBoxes()
         if commandList:
             self.commandHolder.add(name, commandList)

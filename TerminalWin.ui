@@ -14,7 +14,7 @@
    <string>Terminal easier</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QPlainTextEdit" name="plainTextEdit_1">
+   <widget class="QLineEdit" name="lineEdit_1">
     <property name="geometry">
      <rect>
       <x>130</x>
@@ -29,23 +29,14 @@
       <pointsize>10</pointsize>
      </font>
     </property>
-    <property name="verticalScrollBarPolicy">
-     <enum>Qt::ScrollBarAlwaysOff</enum>
-    </property>
-    <property name="horizontalScrollBarPolicy">
-     <enum>Qt::ScrollBarAlwaysOff</enum>
-    </property>
-    <property name="lineWrapMode">
-     <enum>QPlainTextEdit::NoWrap</enum>
-    </property>
-    <property name="plainText">
-     <string notr="true"/>
-    </property>
     <property name="placeholderText">
      <string notr="true"/>
     </property>
+    <property name="plainText" stdset="0">
+     <string notr="true"/>
+    </property>
    </widget>
-   <widget class="QPlainTextEdit" name="plainTextEdit_2">
+   <widget class="QLineEdit" name="lineEdit_2">
     <property name="geometry">
      <rect>
       <x>130</x>
@@ -60,23 +51,14 @@
       <pointsize>10</pointsize>
      </font>
     </property>
-    <property name="verticalScrollBarPolicy">
-     <enum>Qt::ScrollBarAlwaysOff</enum>
-    </property>
-    <property name="horizontalScrollBarPolicy">
-     <enum>Qt::ScrollBarAlwaysOff</enum>
-    </property>
-    <property name="lineWrapMode">
-     <enum>QPlainTextEdit::NoWrap</enum>
-    </property>
-    <property name="plainText">
-     <string notr="true"/>
-    </property>
     <property name="placeholderText">
      <string notr="true"/>
     </property>
+    <property name="plainText" stdset="0">
+     <string notr="true"/>
+    </property>
    </widget>
-   <widget class="QPlainTextEdit" name="plainTextEdit_3">
+   <widget class="QLineEdit" name="lineEdit_3">
     <property name="geometry">
      <rect>
       <x>130</x>
@@ -91,23 +73,14 @@
       <pointsize>10</pointsize>
      </font>
     </property>
-    <property name="verticalScrollBarPolicy">
-     <enum>Qt::ScrollBarAlwaysOff</enum>
-    </property>
-    <property name="horizontalScrollBarPolicy">
-     <enum>Qt::ScrollBarAlwaysOff</enum>
-    </property>
-    <property name="lineWrapMode">
-     <enum>QPlainTextEdit::NoWrap</enum>
-    </property>
-    <property name="plainText">
-     <string notr="true"/>
-    </property>
     <property name="placeholderText">
      <string notr="true"/>
     </property>
+    <property name="plainText" stdset="0">
+     <string notr="true"/>
+    </property>
    </widget>
-   <widget class="QPlainTextEdit" name="plainTextEdit_4">
+   <widget class="QLineEdit" name="lineEdit_4">
     <property name="geometry">
      <rect>
       <x>130</x>
@@ -122,19 +95,10 @@
       <pointsize>10</pointsize>
      </font>
     </property>
-    <property name="verticalScrollBarPolicy">
-     <enum>Qt::ScrollBarAlwaysOff</enum>
-    </property>
-    <property name="horizontalScrollBarPolicy">
-     <enum>Qt::ScrollBarAlwaysOff</enum>
-    </property>
-    <property name="lineWrapMode">
-     <enum>QPlainTextEdit::NoWrap</enum>
-    </property>
-    <property name="plainText">
+    <property name="placeholderText">
      <string notr="true"/>
     </property>
-    <property name="placeholderText">
+    <property name="plainText" stdset="0">
      <string notr="true"/>
     </property>
    </widget>
@@ -334,6 +298,9 @@
       <pointsize>11</pointsize>
      </font>
     </property>
+    <property name="cursor" stdset="0">
+     <cursorShape>IBeamCursor</cursorShape>
+    </property>
     <property name="acceptDrops">
      <bool>false</bool>
     </property>
@@ -367,7 +334,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:15px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; color:#c6ffee;&quot;&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer semper orci nec ligula aliquet consequat. Sed ante risus, euismod gravida mattis sit amet, imperdiet id massa. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Aliquam turpis est, viverra at tincidunt eu, blandit ornare metus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec aliquet porttitor mi, nec pretium orci faucibus vel. Maecenas rutrum justo sit amet lectus egestas, eget fringilla mi elementum. Aliquam eget felis quis diam pulvinar pulvinar at non mi. Sed in augue tincidunt dolor accumsan efficitur.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
-   <widget class="QPlainTextEdit" name="plainTextEdit_0">
+   <widget class="QLineEdit" name="lineEdit_0">
     <property name="geometry">
      <rect>
       <x>130</x>
@@ -382,19 +349,10 @@ p, li { white-space: pre-wrap; }
       <pointsize>10</pointsize>
      </font>
     </property>
-    <property name="verticalScrollBarPolicy">
-     <enum>Qt::ScrollBarAlwaysOff</enum>
-    </property>
-    <property name="horizontalScrollBarPolicy">
-     <enum>Qt::ScrollBarAlwaysOff</enum>
-    </property>
-    <property name="lineWrapMode">
-     <enum>QPlainTextEdit::NoWrap</enum>
-    </property>
-    <property name="plainText">
+    <property name="placeholderText">
      <string notr="true"/>
     </property>
-    <property name="placeholderText">
+    <property name="plainText" stdset="0">
      <string notr="true"/>
     </property>
    </widget>
@@ -501,6 +459,23 @@ p, li { white-space: pre-wrap; }
    </property>
   </action>
  </widget>
+ <tabstops>
+  <tabstop>comboBox</tabstop>
+  <tabstop>lineEdit_0</tabstop>
+  <tabstop>sendButton_0</tabstop>
+  <tabstop>lineEdit_1</tabstop>
+  <tabstop>sendButton_1</tabstop>
+  <tabstop>lineEdit_2</tabstop>
+  <tabstop>sendButton_2</tabstop>
+  <tabstop>lineEdit_3</tabstop>
+  <tabstop>sendButton_3</tabstop>
+  <tabstop>lineEdit_4</tabstop>
+  <tabstop>sendButton_4</tabstop>
+  <tabstop>clearButton</tabstop>
+  <tabstop>editButton</tabstop>
+  <tabstop>openButton</tabstop>
+  <tabstop>textEdit</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

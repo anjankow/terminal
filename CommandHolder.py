@@ -1,6 +1,7 @@
 # This Python file uses the following encoding: utf-8
 import typing
 from lxml import etree
+import os
 
 class Command:
     def __init__(self, content, label=''):
@@ -12,8 +13,11 @@ class CommandHolder:
         # one command set consists of a name (key)
         # and a list of commands (value)
         self.__allCommandSets = {}
-        self.xmlFile = xmlFile
-        self.loadFromXml()
+        self.__xmlFile = xmlFile
+        # load the data from xml, if it exists
+        if os.path.exists(xmlFile):
+            self.loadFromXml()
+
 
     def add(self, name, newCommandSet):
         self.__allCommandSets[name] = newCommandSet
@@ -56,7 +60,7 @@ class CommandHolder:
         print('Saving commands configuration')
         etree.dump(root)
 
-        with open(self.xmlFile, 'w') as file:
+        with open(self.__xmlFile, 'w') as file:
            file.write(etree.tostring(root, encoding='unicode', pretty_print = True))
 
     def loadFromXml(self):
@@ -72,7 +76,7 @@ class CommandHolder:
                 </commandSet>
         </commandConfig>
         '''
-        tree = etree.parse(self.xmlFile)
+        tree = etree.parse(self.__xmlFile)
         root = tree.getroot()
         for child in root:
             self.__allCommandSets[child.attrib['name']] = []
