@@ -17,8 +17,9 @@ def findPorts():
         ret.append(name)
     return ret
 
+
 class SerialPort:
-    def __init__(self, portName: str, callback):
+    def __init__(self, portName: str, callback, debug=True):
         self.readCallback = callback
 
         self.__serialCom = serial.Serial()
@@ -28,6 +29,12 @@ class SerialPort:
         # prepare reading thread
         self.__continueReading = False
         self.__readingThread = Thread(target=self.__readFromPort, daemon=False)
+
+        self.debug = debug
+
+    def __del__(self):
+        self.close()
+
 
     def setPortName(self, name: str):
         if self.__serialCom.is_open:
@@ -46,26 +53,26 @@ class SerialPort:
         self.__serialCom.open()
         if not self.__serialCom.is_open:
             raise SerialException('Port can not be open')
-        DEBUG_LOG('Port is now open')
+        self.DEBUG_LOG('Port is now open')
         self.startReading()
 
     def write(self, data: str):
         self.__serialCom.write(str.encode(data))
-        DEBUG_LOG('Written: ', data)
+        self.DEBUG_LOG('Written: ', data)
 
     def startReading(self):
         self.__continueReading = True
         self.__readingThread.start()
-        DEBUG_LOG('Reading started')
+        self.DEBUG_LOG('Reading started')
 
     def stopReading(self):
-        DEBUG_LOG('Stop reading requested')
+        self.DEBUG_LOG('Stop reading requested')
         self.__continueReading = False
         # cancel reading from another thread
         self.__serialCom.cancel_read()
         if self.__readingThread.is_alive():
             self.__readingThread.join()
-            DEBUG_LOG('Reading thread joined')
+            self.DEBUG_LOG('Reading thread joined')
 
 
     def __readFromPort(self):
@@ -79,19 +86,18 @@ class SerialPort:
             if hexByte != '':
                 numOfBytes += 1
                 # something has been read, call the callback function
-                DEBUG_LOG('Read!', numOfBytes, 'Data = 0x', hexByte)
-                self.readCallback(byte)
+                self.DEBUG_LOG('Read!', numOfBytes, 'Data = 0x', hexByte)
+                self.readCallback(hexByte)
 
+    def DEBUG_LOG(self, *args):
+        if self.debug:
+            print(*args)
 
-def DEBUG_LOG(*args):
-    global DEBUG
-    if DEBUG:
-        print(*args)
 
 
 if __name__ == "__main__":
     DEBUG = True
-    ser = SerialPort("COM3", lambda x: DEBUG_LOG('callback called'))
+    ser = SerialPort("COM3", lambda x: self.DEBUG_LOG('callback called'))
     ser.open()
 
     ser.write('UCI(0x20,0x02,0x00,0x00);')

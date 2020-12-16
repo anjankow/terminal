@@ -1,7 +1,7 @@
 import sys
 import serial
 from threading import Lock
-from threading import Thread
+
 
 from PyQt5 import QtCore, QtGui, QtWidgets, uic
 from PyQt5.QtWidgets import QMessageBox, QDialog
@@ -65,10 +65,8 @@ class TerminalWin(QtWidgets.QMainWindow, Ui_TerminalWin):
         self.textEdit.setStyleSheet('background-color: rgb(53, 43, 65);')
         self.textEdit.setPlainText('')
 
-        # prepare reading thread
-        self.continueRead = False
+        # lock for displayed communication data
         self.dataLock = Lock()
-        self.readingThread = Thread(target=self.readFromPort, daemon=False)
 
         # find available COM port
         ports = findPorts()
@@ -76,7 +74,7 @@ class TerminalWin(QtWidgets.QMainWindow, Ui_TerminalWin):
             portName = ports[0]
         else:
             portName = ''
-        self.serialPort = SerialPort(portName)
+        self.serialPort = SerialPort(portName, self.readCallback)
 
         # open the port if any or close it to set GUI to the corresponding state
         if portName != '':
@@ -86,6 +84,13 @@ class TerminalWin(QtWidgets.QMainWindow, Ui_TerminalWin):
 
         # load the commands from the config file
         self.commandHolder = CommandHolder(commandConfigFile)
+
+
+    # function called whenever a byte is read
+    def readCallback(self, hexByte):
+        with self.dataLock:
+            self.textEdit.setTextColor(ResponseColor)
+            self.textEdit.append(hexByte)
 
 
     def editCommands(self):
@@ -130,7 +135,6 @@ class TerminalWin(QtWidgets.QMainWindow, Ui_TerminalWin):
         try:
             self.serialPort.open()
             self.updateGuiOnOpenedPort()
-            self.startReading()
 
         except serial.SerialException:
             # port can't be opened, call closePort() method to change the button back to Open functionality
@@ -139,7 +143,7 @@ class TerminalWin(QtWidgets.QMainWindow, Ui_TerminalWin):
 
     def send(self, commandNum: int):
         # get the command from the text editor
-        command = self.commandGroups[commandNum].commandTextEdit.toPlainText()
+        command = self.commandGroups[commandNum].commandTextEdit.text()
         if command != "":
             # write from the serial port
             bytes = self.serialPort.write(command)
@@ -148,14 +152,6 @@ class TerminalWin(QtWidgets.QMainWindow, Ui_TerminalWin):
                 print("Sending command" + str(commandNum) +': ', command)
                 self.textEdit.setTextColor(CommandColor)
                 self.textEdit.append(command)
-
-    def startReading(self):
-        self.readingThread.start()
-        self.continueRead = True
-
-    def stopReading(self):
-        self.continueRead = False
-        self.readingThread.join()
 
     def updateGuiOnClosedPort(self):
         # port is open, change the button functionality to 'Open'
@@ -175,16 +171,6 @@ class TerminalWin(QtWidgets.QMainWindow, Ui_TerminalWin):
         for command in self.commandGroups:
             command.sendButton.setEnabled(True)
 
-    def readFromPort(self):
-        print('Reading start')
-        while self.continueRead:
-            readData = self.serialPort.readByte()
-            print('Read! Data = ' + str(readData))
-#            data = format(readData, 'x') + " "
-            data = str(readData)
-            with self.dataLock:
-                self.textEdit.setTextColor(ResponseColor)
-                self.textEdit.append(data)
 
 
 
