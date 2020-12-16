@@ -15,8 +15,8 @@ from CommandEditor import CommandEditor
 qtCreatorFile = "TerminalWin.ui"
 Ui_TerminalWin, QtBaseClass = uic.loadUiType(qtCreatorFile)
 
-CommandColor = QColor('#c6ffee')
-ResponseColor = QColor('#fcfed4')
+CommandColor = 'rgb(198, 255, 238)'
+ResponseColor = '#fcfed4'
 PortOpenedColor = 'rgb(199, 255, 147)'
 PortClosedColor = 'rgb(177, 43, 43)'
 
@@ -53,6 +53,7 @@ class TerminalWin(QtWidgets.QMainWindow, Ui_TerminalWin):
         # assign actions to the other buttons
         self.openButton.clicked.connect(self.closePort)
         self.editButton.clicked.connect(self.editCommands)
+        self.clearButton.clicked.connect(self.clearScreen)
 
         # assign actions to menu
         self.actionPort.triggered.connect(self.configurePort)
@@ -89,8 +90,10 @@ class TerminalWin(QtWidgets.QMainWindow, Ui_TerminalWin):
     # function called whenever a byte is read
     def readCallback(self, hexByte):
         with self.dataLock:
-            self.textEdit.setTextColor(ResponseColor)
-            self.textEdit.append(hexByte)
+            self.printResponse(hexByte)
+
+    def clearScreen(self):
+        print(self.textEdit.html)
 
 
     def editCommands(self):
@@ -127,7 +130,6 @@ class TerminalWin(QtWidgets.QMainWindow, Ui_TerminalWin):
                 print('Port ' + self.serialPort.getPortName() + ' is now open')
 
     def closePort(self):
-        self.stopReading()
         self.serialPort.close()
         self.updateGuiOnClosedPort()
 
@@ -146,12 +148,20 @@ class TerminalWin(QtWidgets.QMainWindow, Ui_TerminalWin):
         command = self.commandGroups[commandNum].commandTextEdit.text()
         if command != "":
             # write from the serial port
-            bytes = self.serialPort.write(command)
+            self.serialPort.write(command)
             with self.dataLock:
                 # print the command on the textEdit
                 print("Sending command" + str(commandNum) +': ', command)
-                self.textEdit.setTextColor(CommandColor)
-                self.textEdit.append(command)
+                self.printCommand(command)
+
+    def printResponse(self, text):
+        text = "<span style=\"  color:" + ResponseColor + ";\" >"  + text + " </span>"
+        self.textEdit.insertHtml(text)
+
+    def printCommand(self, text):
+        text = "<span style=\"  color:" + CommandColor + ";\" >"  + text + "<br/></span>"
+        self.textEdit.insertHtml(text)
+
 
     def updateGuiOnClosedPort(self):
         # port is open, change the button functionality to 'Open'
@@ -178,4 +188,6 @@ if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     window = TerminalWin()
     window.show()
-    sys.exit(app.exec_())
+    code = app.exec_()
+    window.closePort()
+    sys.exit(code)
