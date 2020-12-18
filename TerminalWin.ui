@@ -51,6 +51,9 @@
       <pointsize>9</pointsize>
      </font>
     </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
     <property name="inputMask">
      <string/>
     </property>
@@ -114,6 +117,11 @@
       <height>28</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>9</pointsize>
+     </font>
+    </property>
     <property name="text">
      <string>Send</string>
     </property>
@@ -126,6 +134,11 @@
       <width>71</width>
       <height>28</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>9</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>Send</string>
@@ -140,6 +153,11 @@
       <height>28</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>9</pointsize>
+     </font>
+    </property>
     <property name="text">
      <string>Send</string>
     </property>
@@ -153,6 +171,11 @@
       <height>28</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>9</pointsize>
+     </font>
+    </property>
     <property name="text">
      <string>Send</string>
     </property>
@@ -160,7 +183,7 @@
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>430</x>
+      <x>445</x>
       <y>450</y>
       <width>69</width>
       <height>21</height>
@@ -185,7 +208,7 @@
    <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
-      <x>430</x>
+      <x>445</x>
       <y>490</y>
       <width>69</width>
       <height>21</height>
@@ -210,7 +233,7 @@
    <widget class="QLabel" name="label_4">
     <property name="geometry">
      <rect>
-      <x>430</x>
+      <x>445</x>
       <y>530</y>
       <width>69</width>
       <height>21</height>
@@ -235,7 +258,7 @@
    <widget class="QLabel" name="label_1">
     <property name="geometry">
      <rect>
-      <x>430</x>
+      <x>445</x>
       <y>410</y>
       <width>69</width>
       <height>21</height>
@@ -266,6 +289,11 @@
       <height>71</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>8</pointsize>
+     </font>
+    </property>
     <property name="text">
      <string>Edit</string>
     </property>
@@ -278,6 +306,11 @@
       <width>51</width>
       <height>31</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>8</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>Clear</string>
@@ -317,6 +350,11 @@
       <height>28</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>9</pointsize>
+     </font>
+    </property>
     <property name="text">
      <string>Send</string>
     </property>
@@ -324,7 +362,7 @@
    <widget class="QLabel" name="label_0">
     <property name="geometry">
      <rect>
-      <x>430</x>
+      <x>445</x>
       <y>370</y>
       <width>69</width>
       <height>21</height>
@@ -355,6 +393,11 @@
       <height>41</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>8</pointsize>
+     </font>
+    </property>
     <property name="styleSheet">
      <string notr="true"/>
     </property>
@@ -368,11 +411,16 @@
       <x>130</x>
       <y>320</y>
       <width>371</width>
-      <height>22</height>
+      <height>31</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>9</pointsize>
+     </font>
+    </property>
    </widget>
-   <widget class="QTextEdit" name="textEdit">
+   <widget class="QTextEdit" name="terminal">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -381,11 +429,16 @@
       <height>291</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>9</pointsize>
+     </font>
+    </property>
     <property name="styleSheet">
      <string notr="true">background-color: rgb(53, 43, 65);</string>
     </property>
    </widget>
-   <zorder>textEdit</zorder>
+   <zorder>terminal</zorder>
    <zorder>lineEdit_1</zorder>
    <zorder>lineEdit_2</zorder>
    <zorder>lineEdit_3</zorder>

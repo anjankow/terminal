@@ -26,16 +26,11 @@ class CommandGroup:
         self.commandLabel = commandLabel
 
 
-class UpdateEvent(QObject):
-    activeCommandSetChanged = pyqtSignal()
-
-
 class TerminalWin(QtWidgets.QMainWindow, Ui_TerminalWin):
     def __init__(self):
         QtWidgets.QMainWindow.__init__(self)
         Ui_TerminalWin.__init__(self)
         self.setupUi(self)
-        self.updateEvent = UpdateEvent()
 
         # initialize command groups
         self.commandGroups = [
@@ -46,13 +41,7 @@ class TerminalWin(QtWidgets.QMainWindow, Ui_TerminalWin):
             CommandGroup(self.lineEdit_4, self.sendButton_4, self.label_4),
         ]
 
-        # set style of the console window
-        font = QtGui.QFont()
-        font.setPointSize(12)
-        font.setFamily('Consolas')
-        self.textEdit.setFont(font)
-        self.textEdit.setStyleSheet('background-color: ' + TERMINALBCKGND_COLOR + ';')
-        self.textEdit.setPlainText('')
+        self.terminal.setPlainText('')
 
         # lock for displayed communication data
         self.dataLock = Lock()
@@ -80,6 +69,8 @@ class TerminalWin(QtWidgets.QMainWindow, Ui_TerminalWin):
         else:
             self.updateOnClosedPort()
 
+        self.setStyles()
+
 
     def assignConnections(self):
         # assign the action to the Send button
@@ -106,7 +97,7 @@ class TerminalWin(QtWidgets.QMainWindow, Ui_TerminalWin):
             self.printResponse(hexByte)
 
     def clearScreen(self):
-        print(self.textEdit.html)
+        self.terminal.clear()
 
 
     def editCommands(self):
@@ -149,8 +140,9 @@ class TerminalWin(QtWidgets.QMainWindow, Ui_TerminalWin):
              self.comboBox.setCurrentIndex(index)
 
 
-    def updateOnComboboxChange(self, currentName):
+    def updateOnComboboxChange(self):
         # called on combobox change
+        currentName =   self.comboBox.currentText()
         self.commandHolder.setActiveCommandSet(currentName)
         self.loadCommandSet(currentName)
 
@@ -187,17 +179,17 @@ class TerminalWin(QtWidgets.QMainWindow, Ui_TerminalWin):
             # write from the serial port
             self.serialPort.write(command)
             with self.dataLock:
-                # print the command on the textEdit
+                # print the command on the terminal
                 print("Sending command" + str(commandNum) +': ', command)
                 self.printCommand(command)
 
     def printResponse(self, text):
         text = "<span style=\"  color:" + RESPONSE_COLOR + ";\" >"  + text + " </span>"
-        self.textEdit.insertHtml(text)
+        self.terminal.insertHtml(text)
 
     def printCommand(self, text):
         text = "<span style=\"  color:" + COMMAND_COLOR + ";\" >"  + text + "<br/></span>"
-        self.textEdit.insertHtml(text)
+        self.terminal.insertHtml(text)
 
     def updateOnClosedPort(self):
         # port is open, change the button functionality to 'Open'
@@ -217,6 +209,16 @@ class TerminalWin(QtWidgets.QMainWindow, Ui_TerminalWin):
         for command in self.commandGroups:
             command.sendButton.setEnabled(True)
 
+    def setStyles(self):
+        # set style of the console window
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        font.setFamily('Consolas')
+        self.terminal.setFont(font)
+        self.terminal.setStyleSheet('background-color: ' + TERMINALBCKGND_COLOR + ';')
+
+        for commandGroup in self.commandGroups:
+            commandGroup.commandTextEdit.setStyleSheet('color: ' + CMDEDITFONT_COLOR + ';')
 
 
 
