@@ -34,6 +34,9 @@ class CommandEditor(QDialog, Ui_CommandEditor):
         self.textBoxes = self.getTextBoxesOnInit()
         self.defaultConfigName = 'New commands'
 
+        # this flag informs whether any data has been dataEntered
+        self.__dataEntered = False
+
 
     def getTextBoxesOnInit(self):
         # gather all the command textEdits and corresponding labels
@@ -82,7 +85,9 @@ class CommandEditor(QDialog, Ui_CommandEditor):
             name = self.defaultConfigName
         commandList = self.getDataFromTextBoxes()
         if commandList:
+            self.__dataEntered = True
             self.commandHolder.add(name, commandList)
+            self.commandHolder.setActiveCommandSet(name)
 
     def loadConfig(self):
         name = self.comboBox.currentText()
@@ -94,6 +99,9 @@ class CommandEditor(QDialog, Ui_CommandEditor):
         name = self.comboBox.currentText()
         self.commandHolder.delete(name)
         self.updateComboBox()
+
+    def dataEntered(self):
+        return self.__dataEntered
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)

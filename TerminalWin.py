@@ -6,21 +6,18 @@ from threading import Lock
 from PyQt5 import QtCore, QtGui, QtWidgets, uic
 from PyQt5.QtWidgets import QMessageBox, QDialog
 from PyQt5.QtGui import QColor
+from PyQt5.QtCore import QObject, pyqtSignal
 
 from SerialPort import SerialPort, findPorts
 from PortConfig import PortConfig
 from CommandHolder import CommandHolder
 from CommandEditor import CommandEditor
+from resources import *
+
 
 qtCreatorFile = "TerminalWin.ui"
 Ui_TerminalWin, QtBaseClass = uic.loadUiType(qtCreatorFile)
 
-CommandColor = 'rgb(198, 255, 238)'
-ResponseColor = '#fcfed4'
-PortOpenedColor = 'rgb(199, 255, 147)'
-PortClosedColor = 'rgb(177, 43, 43)'
-
-commandConfigFile = 'commandConfig.xml'
 
 class CommandGroup:
     def __init__(self, textEdit, sendButton, commandLabel):
@@ -29,11 +26,16 @@ class CommandGroup:
         self.commandLabel = commandLabel
 
 
+class UpdateEvent(QObject):
+    activeCommandSetChanged = pyqtSignal()
+
+
 class TerminalWin(QtWidgets.QMainWindow, Ui_TerminalWin):
     def __init__(self):
         QtWidgets.QMainWindow.__init__(self)
         Ui_TerminalWin.__init__(self)
         self.setupUi(self)
+        self.updateEvent = UpdateEvent()
 
         # initialize command groups
         self.commandGroups = [
@@ -43,6 +45,43 @@ class TerminalWin(QtWidgets.QMainWindow, Ui_TerminalWin):
             CommandGroup(self.lineEdit_3, self.sendButton_3, self.label_3),
             CommandGroup(self.lineEdit_4, self.sendButton_4, self.label_4),
         ]
+
+        # set style of the console window
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        font.setFamily('Consolas')
+        self.textEdit.setFont(font)
+        self.textEdit.setStyleSheet('background-color: ' + TERMINALBCKGND_COLOR + ';')
+        self.textEdit.setPlainText('')
+
+        # lock for displayed communication data
+        self.dataLock = Lock()
+
+        # load the commands from the config file
+        self.commandHolder = CommandHolder(CONFIG_FILE)
+        activeName = self.commandHolder.getActiveCommandSet()
+        self.loadCommandSet(activeName)
+        self.updateCombobox()
+
+        self.assignConnections()
+
+
+        # find available COM port
+        ports = findPorts()
+        if len(ports) > 0:
+            portName = ports[0]
+        else:
+            portName = ''
+        self.serialPort = SerialPort(portName, self.readCallback)
+
+        # open the port if any or close it to set GUI to the corresponding state
+        if portName != '':
+            self.openPort()
+        else:
+            self.updateOnClosedPort()
+
+
+    def assignConnections(self):
         # assign the action to the Send button
         self.sendButton_0.clicked.connect(lambda: self.send(0))
         self.sendButton_1.clicked.connect(lambda: self.send(1))
@@ -58,33 +97,7 @@ class TerminalWin(QtWidgets.QMainWindow, Ui_TerminalWin):
         # assign actions to menu
         self.actionPort.triggered.connect(self.configurePort)
 
-        # set style of the console window
-        font = QtGui.QFont()
-        font.setPointSize(12)
-        font.setFamily('Consolas')
-        self.textEdit.setFont(font)
-        self.textEdit.setStyleSheet('background-color: rgb(53, 43, 65);')
-        self.textEdit.setPlainText('')
-
-        # lock for displayed communication data
-        self.dataLock = Lock()
-
-        # find available COM port
-        ports = findPorts()
-        if len(ports) > 0:
-            portName = ports[0]
-        else:
-            portName = ''
-        self.serialPort = SerialPort(portName, self.readCallback)
-
-        # open the port if any or close it to set GUI to the corresponding state
-        if portName != '':
-            self.openPort()
-        else:
-            self.updateGuiOnClosedPort()
-
-        # load the commands from the config file
-        self.commandHolder = CommandHolder(commandConfigFile)
+        self.comboBox.currentTextChanged.connect(self.updateOnComboboxChange)
 
 
     # function called whenever a byte is read
@@ -101,21 +114,45 @@ class TerminalWin(QtWidgets.QMainWindow, Ui_TerminalWin):
         ret = dialog.exec_()
         # if the user pressed OK, fill text boxes with the given command set
         if ret == QtWidgets.QDialog.Accepted:
-            # clear all the current text boxes
-            for i in range(0, len(self.commandGroups)):
-                self.commandGroups[i].commandTextEdit.clear()
-                self.commandGroups[i].commandLabel.setText('Command ' + str(i))
+            if dialog.dataEntered():
+                # the given configuration is the active one now
+                # update UI using the active configuration
+                self.loadCommandSet(self.commandHolder.getActiveCommandSet())
+        self.updateCombobox()
 
-            # get the current commands from the dialog
-            currentName = dialog.configName.text()
-            if currentName == '':
-                currentName = dialog.defaultConfigName
 
-            i = 0
-            for command in self.commandHolder.getCommandSet(currentName):
-                self.commandGroups[i].commandTextEdit.setText(command.content)
-                self.commandGroups[i].commandLabel.setText(command.label)
-                i += 1
+
+    def loadCommandSet(self, commandSetName):
+        # clear all the current text boxes
+        for i in range(0, len(self.commandGroups)):
+            self.commandGroups[i].commandTextEdit.clear()
+            self.commandGroups[i].commandLabel.setText('Command ' + str(i))
+
+        if commandSetName != None and commandSetName in self.commandHolder.getAll():
+            # fill the text boxes with the data from the given command set
+            j = 0
+            for command in self.commandHolder.getCommandSet(commandSetName):
+                self.commandGroups[j].commandTextEdit.setText(command.content)
+                if command.label != '':
+                    self.commandGroups[j].commandLabel.setText(command.label)
+                    self.commandGroups[j].commandLabel.adjustSize()
+                j += 1
+
+
+    def updateCombobox(self):
+        # update the comboBox
+        self.comboBox.clear()
+        self.comboBox.addItems(self.commandHolder.getAll().keys())
+        active = self.commandHolder.getActiveCommandSet()
+        index = self.comboBox.findText(active, QtCore.Qt.MatchFixedString)
+        if index >= 0:
+             self.comboBox.setCurrentIndex(index)
+
+
+    def updateOnComboboxChange(self, currentName):
+        # called on combobox change
+        self.commandHolder.setActiveCommandSet(currentName)
+        self.loadCommandSet(currentName)
 
 
     def configurePort(self):
@@ -131,17 +168,17 @@ class TerminalWin(QtWidgets.QMainWindow, Ui_TerminalWin):
 
     def closePort(self):
         self.serialPort.close()
-        self.updateGuiOnClosedPort()
+        self.updateOnClosedPort()
 
     def openPort(self):
         try:
             self.serialPort.open()
-            self.updateGuiOnOpenedPort()
+            self.updateOnOpenedPort()
 
         except serial.SerialException:
             # port can't be opened, call closePort() method to change the button back to Open functionality
             QMessageBox.information(self, 'Info', 'Port ' + self.serialPort.getPortName() + ' is closed')
-            self.updateGuiOnClosedPort()
+            self.updateOnClosedPort()
 
     def send(self, commandNum: int):
         # get the command from the text editor
@@ -155,31 +192,31 @@ class TerminalWin(QtWidgets.QMainWindow, Ui_TerminalWin):
                 self.printCommand(command)
 
     def printResponse(self, text):
-        text = "<span style=\"  color:" + ResponseColor + ";\" >"  + text + " </span>"
+        text = "<span style=\"  color:" + RESPONSE_COLOR + ";\" >"  + text + " </span>"
         self.textEdit.insertHtml(text)
 
     def printCommand(self, text):
-        text = "<span style=\"  color:" + CommandColor + ";\" >"  + text + "<br/></span>"
+        text = "<span style=\"  color:" + COMMAND_COLOR + ";\" >"  + text + "<br/></span>"
         self.textEdit.insertHtml(text)
 
-
-    def updateGuiOnClosedPort(self):
+    def updateOnClosedPort(self):
         # port is open, change the button functionality to 'Open'
-        self.openButton.setStyleSheet('background-color:' + PortClosedColor + '; color:white')
+        self.openButton.setStyleSheet('background-color:' + PORTCLOSED_COLOR + '; color:white')
         self.openButton.clicked.disconnect()
         self.openButton.clicked.connect(self.openPort)
         self.openButton.setText('Open')
         for command in self.commandGroups:
             command.sendButton.setDisabled(True)
 
-    def updateGuiOnOpenedPort(self):
+    def updateOnOpenedPort(self):
         # port is open, change the button functionality to 'Close'
-        self.openButton.setStyleSheet('background-color:' + PortOpenedColor + '; color:black')
+        self.openButton.setStyleSheet('background-color:' + PORTOPENED_COLOR + '; color:black')
         self.openButton.clicked.disconnect()
         self.openButton.clicked.connect(self.closePort)
         self.openButton.setText('Close')
         for command in self.commandGroups:
             command.sendButton.setEnabled(True)
+
 
 
 
@@ -190,4 +227,5 @@ if __name__ == "__main__":
     window.show()
     code = app.exec_()
     window.closePort()
+    window.commandHolder.saveToXml()
     sys.exit(code)

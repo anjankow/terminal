@@ -26,11 +26,11 @@
     <property name="font">
      <font>
       <family>Consolas</family>
-      <pointsize>10</pointsize>
+      <pointsize>9</pointsize>
      </font>
     </property>
-    <property name="placeholderText">
-     <string notr="true"/>
+    <property name="inputMask">
+     <string/>
     </property>
     <property name="plainText" stdset="0">
      <string notr="true"/>
@@ -48,11 +48,11 @@
     <property name="font">
      <font>
       <family>Consolas</family>
-      <pointsize>10</pointsize>
+      <pointsize>9</pointsize>
      </font>
     </property>
-    <property name="placeholderText">
-     <string notr="true"/>
+    <property name="inputMask">
+     <string/>
     </property>
     <property name="plainText" stdset="0">
      <string notr="true"/>
@@ -70,11 +70,11 @@
     <property name="font">
      <font>
       <family>Consolas</family>
-      <pointsize>10</pointsize>
+      <pointsize>9</pointsize>
      </font>
     </property>
-    <property name="placeholderText">
-     <string notr="true"/>
+    <property name="inputMask">
+     <string/>
     </property>
     <property name="plainText" stdset="0">
      <string notr="true"/>
@@ -92,11 +92,11 @@
     <property name="font">
      <font>
       <family>Consolas</family>
-      <pointsize>10</pointsize>
+      <pointsize>9</pointsize>
      </font>
     </property>
-    <property name="placeholderText">
-     <string notr="true"/>
+    <property name="inputMask">
+     <string/>
     </property>
     <property name="plainText" stdset="0">
      <string notr="true"/>
@@ -175,7 +175,7 @@
     <property name="font">
      <font>
       <family>MS Shell Dlg 2</family>
-      <pointsize>8</pointsize>
+      <pointsize>9</pointsize>
      </font>
     </property>
     <property name="text">
@@ -200,7 +200,7 @@
     <property name="font">
      <font>
       <family>MS Shell Dlg 2</family>
-      <pointsize>8</pointsize>
+      <pointsize>9</pointsize>
      </font>
     </property>
     <property name="text">
@@ -225,7 +225,7 @@
     <property name="font">
      <font>
       <family>MS Shell Dlg 2</family>
-      <pointsize>8</pointsize>
+      <pointsize>9</pointsize>
      </font>
     </property>
     <property name="text">
@@ -250,7 +250,7 @@
     <property name="font">
      <font>
       <family>MS Shell Dlg 2</family>
-      <pointsize>8</pointsize>
+      <pointsize>9</pointsize>
      </font>
     </property>
     <property name="text">
@@ -295,11 +295,11 @@
     <property name="font">
      <font>
       <family>Consolas</family>
-      <pointsize>10</pointsize>
+      <pointsize>9</pointsize>
      </font>
     </property>
-    <property name="placeholderText">
-     <string notr="true"/>
+    <property name="inputMask">
+     <string/>
     </property>
     <property name="plainText" stdset="0">
      <string notr="true"/>
@@ -339,7 +339,7 @@
     <property name="font">
      <font>
       <family>MS Shell Dlg 2</family>
-      <pointsize>8</pointsize>
+      <pointsize>9</pointsize>
      </font>
     </property>
     <property name="text">

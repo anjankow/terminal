@@ -45,7 +45,8 @@ class SerialPort:
         return self.__serialCom.port
 
     def close(self):
-        self.stopReading()
+        if self.__continueReading:
+            self.stopReading()
         self.__serialCom.close()
 
     # open by deafult starts reading from the port
