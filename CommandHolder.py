@@ -68,8 +68,6 @@ class CommandHolder:
             commandSet.text = self.__activeSet
 
         print('Saving commands configuration')
-        etree.dump(root)
-
         with open(self.__xmlFile, 'w') as file:
            file.write(etree.tostring(root, encoding='unicode', pretty_print = True))
 

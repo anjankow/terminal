@@ -19,6 +19,11 @@ qtCreatorFile = "TerminalWin.ui"
 Ui_TerminalWin, QtBaseClass = uic.loadUiType(qtCreatorFile)
 
 
+class ThreadEvent(QObject):
+    # events coming from another thread
+    bytesRead = pyqtSignal(str)
+
+
 class CommandGroup:
     def __init__(self, textEdit, sendButton, commandLabel):
         self.commandTextEdit = textEdit
@@ -54,7 +59,6 @@ class TerminalWin(QtWidgets.QMainWindow, Ui_TerminalWin):
 
         self.assignConnections()
 
-
         # find available COM port
         ports = findPorts()
         if len(ports) > 0:
@@ -70,6 +74,10 @@ class TerminalWin(QtWidgets.QMainWindow, Ui_TerminalWin):
             self.updateOnClosedPort()
 
         self.setStyles()
+
+        self.threadEvent = ThreadEvent()
+        self.threadEvent.bytesRead.connect(lambda readByte: self.printResponse(readByte))
+
 
 
     def assignConnections(self):
@@ -94,7 +102,8 @@ class TerminalWin(QtWidgets.QMainWindow, Ui_TerminalWin):
     # function called whenever a byte is read
     def readCallback(self, hexByte):
         with self.dataLock:
-            self.printResponse(hexByte)
+            self.threadEvent.bytesRead.emit(hexByte)
+
 
     def clearScreen(self):
         self.terminal.clear()
@@ -183,13 +192,16 @@ class TerminalWin(QtWidgets.QMainWindow, Ui_TerminalWin):
                 print("Sending command" + str(commandNum) +': ', command)
                 self.printCommand(command)
 
+    # function called on bytesRead event
     def printResponse(self, text):
         text = "<span style=\"  color:" + RESPONSE_COLOR + ";\" >"  + text + " </span>"
         self.terminal.insertHtml(text)
 
     def printCommand(self, text):
-        text = "<span style=\"  color:" + COMMAND_COLOR + ";\" >"  + text + "<br/></span>"
+        text = "<span style=\"  color:" + COMMAND_COLOR + ";\" >"  + text + "</span><br/>"
+        self.terminal.append('')
         self.terminal.insertHtml(text)
+        self.terminal.append('')
 
     def updateOnClosedPort(self):
         # port is open, change the button functionality to 'Open'
