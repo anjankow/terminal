@@ -5,7 +5,7 @@ from threading import Lock
 
 from PyQt5 import QtCore, QtGui, QtWidgets, uic
 from PyQt5.QtWidgets import QMessageBox, QDialog
-from PyQt5.QtGui import QColor
+from PyQt5.QtGui import QColor, QTextCursor
 from PyQt5.QtCore import QObject, pyqtSignal
 
 from SerialPort import SerialPort, findPorts
@@ -191,11 +191,13 @@ class TerminalWin(QtWidgets.QMainWindow, Ui_TerminalWin):
                 # print the command on the terminal
                 print("Sending command" + str(commandNum) +': ', command)
                 self.printCommand(command)
+                self.terminal.moveCursor(QTextCursor.End)
 
     # function called on bytesRead event
     def printResponse(self, text):
         text = "<span style=\"  color:" + RESPONSE_COLOR + ";\" >"  + text + " </span>"
         self.terminal.insertHtml(text)
+        self.terminal.moveCursor(QTextCursor.End)
 
     def printCommand(self, text):
         text = "<span style=\"  color:" + COMMAND_COLOR + ";\" >"  + text + "</span><br/>"
