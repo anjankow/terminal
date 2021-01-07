@@ -28,7 +28,7 @@ class SerialPort:
 
         # prepare reading thread
         self.__continueReading = False
-        self.__readingThread = Thread(target=self.__readFromPort, daemon=False)
+        self.__readingThread = None
 
         self.debug = debug
 
@@ -63,6 +63,7 @@ class SerialPort:
 
     def startReading(self):
         self.__continueReading = True
+        self.__readingThread = Thread(target=self.__readFromPort, daemon=False)
         self.__readingThread.start()
         self.DEBUG_LOG('Reading started')
 

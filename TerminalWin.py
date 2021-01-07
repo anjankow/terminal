@@ -1,7 +1,7 @@
 import sys
 import serial
 from threading import Lock
-
+from enum import Enum
 
 from PyQt5 import QtCore, QtGui, QtWidgets, uic
 from PyQt5.QtWidgets import QMessageBox, QDialog
@@ -18,6 +18,10 @@ from resources import *
 qtCreatorFile = "TerminalWin.ui"
 Ui_TerminalWin, QtBaseClass = uic.loadUiType(qtCreatorFile)
 
+
+class IncomingType(Enum):
+    NOTIFICATION = 0
+    RESPONSE = 1
 
 class ThreadEvent(QObject):
     # events coming from another thread
@@ -78,6 +82,7 @@ class TerminalWin(QtWidgets.QMainWindow, Ui_TerminalWin):
         self.threadEvent = ThreadEvent()
         self.threadEvent.bytesRead.connect(lambda readByte: self.printResponse(readByte))
 
+        self.incomingType = IncomingType.NOTIFICATION
 
 
     def assignConnections(self):
@@ -105,8 +110,37 @@ class TerminalWin(QtWidgets.QMainWindow, Ui_TerminalWin):
             self.threadEvent.bytesRead.emit(hexByte)
 
 
+    def onIncomingBytes(self, text):
+        self.interpret(text)
+        if self.incomingType == IncomingType.NOTIFICATION:
+            self.printNotification(text)
+        elif self.incomingType == IncomingType.RESPONSE:
+            self.printResponse(text)
+        else:
+            pass
+
+    def interpret(self, text):
+        self.lastReceived += text
+
+
+
     def clearScreen(self):
-        self.terminal.clear()
+
+        self.terminal.moveCursor(QTextCursor.PreviousWord)
+        self.terminal.moveCursor(QTextCursor.PreviousWord)
+        self.terminal.moveCursor(QTextCursor.PreviousWord)
+        responseStyle = "<span style=\"  color:" + RESPONSE_COLOR + ";\" >"
+        self.terminal.insertHtml(responseStyle)
+#        self.terminal.moveCursor(QTextCursor.End)
+#        self.terminal.insertHtml(text + ' ')
+        self.terminal.insertHtml('AAAAAA')
+        self.terminal.insertHtml("</span>")
+        print(self.terminal.toHtml())
+        self.terminal.update()
+#        print('Moving cursor from ', start)
+#        self.terminal.select(
+#        self.removeSelectedText()
+#        self.terminal.clear()
 
 
     def editCommands(self):
@@ -195,9 +229,11 @@ class TerminalWin(QtWidgets.QMainWindow, Ui_TerminalWin):
 
     # function called on bytesRead event
     def printResponse(self, text):
-        text = "<span style=\"  color:" + RESPONSE_COLOR + ";\" >"  + text + " </span>"
-        self.terminal.insertHtml(text)
-        self.terminal.moveCursor(QTextCursor.End)
+#        text = "<span style=\"  color:" + RESPONSE_COLOR + ";\" >"  + text + " </span>"
+        with self.dataLock:
+            text = text + ' '
+            self.terminal.insertHtml(text)
+            self.terminal.moveCursor(QTextCursor.End)
 
     def printCommand(self, text):
         text = "<span style=\"  color:" + COMMAND_COLOR + ";\" >"  + text + "</span><br/>"
