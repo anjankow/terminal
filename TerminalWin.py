@@ -190,7 +190,7 @@ class TerminalWin(QtWidgets.QMainWindow, Ui_TerminalWin):
             # write from the serial port
             self.serialPort.write(command)
             print("Sending command" + str(commandNum) +': ', command)
-            self.terminalDisplay.writeCommand(command)
+            self.terminalDisplay.printCommand(command)
 
     def updateOnClosedPort(self):
         # port is open, change the button functionality to 'Open'

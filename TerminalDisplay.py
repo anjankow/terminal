@@ -20,8 +20,10 @@ class TerminalDisplay:
         self.lastCharsRead = ''
 
         self.firstRspAfterCmd = True
+        self.charsLimit = CHARS_LIMIT
 
         self.setStyle();
+
 
     def setStyle(self):
         font = QtGui.QFont()
@@ -43,7 +45,6 @@ class TerminalDisplay:
                     for i in range(0, len(syncCharsSpaceless) - 2, 2):
                         self.terminal.moveCursor(QTextCursor.PreviousWord)
                     self.terminal.insertHtml('<br/> ')
-                    print('New line added')
                     self.terminal.moveCursor(QTextCursor.End)
                 # clear the stored chars
                 self.lastCharsRead = ''
@@ -67,25 +68,37 @@ class TerminalDisplay:
         with self.dataLock:
             text = "<span style=\"  color:" + RESPONSE_COLOR + ";\" >"  + text + "</span> "
             text = text + ' '
+            self.protectAgainstOverflow(text)
             self.terminal.insertHtml(text)
             self.terminal.moveCursor(QTextCursor.End)
 
+    # delete chars from the top if the limit is reached
+    def protectAgainstOverflow(self, text):
+        currentLen = len(self.terminal.toPlainText())
+        if currentLen + len(text) >= self.charsLimit:
+            cursor = self.terminal.textCursor()
+            self.terminal.setTextCursor(cursor)
+            cursor.setPosition(QTextCursor.Start)
+            cursor.setPosition(QTextCursor.Start + len(text), QtGui.QTextCursor.KeepAnchor)
+            cursor.removeSelectedText()
+            cursor.movePosition(QTextCursor.End)
+
+
+    # print the command on the terminal
     def printCommand(self, text):
-        text = "<span style=\"  color:" + COMMAND_COLOR + ";\" >"  + text + "</span><br/>"
-        self.terminal.append('')
-        self.terminal.insertHtml(text)
-        self.terminal.append('')
+        self.firstRspAfterCmd = True
+
+        with self.dataLock:
+            text = "<span style=\"  color:" + COMMAND_COLOR + ";\" >"  + text + "</span> "
+            # first delete some chars from the top if needed
+            self.protectAgainstOverflow(text)
+            self.terminal.append('')
+            self.terminal.insertHtml(text)
+            self.terminal.append('')
+
 
     def updateSyncChars(self, chars):
         self.syncChars = chars
 
     def clear(self):
         self.terminal.clear()
-
-    def writeCommand(self, command):
-        with self.dataLock:
-            # print the command on the terminal
-
-            self.printCommand(command)
-            self.terminal.moveCursor(QTextCursor.End)
-            self.firstRspAfterCmd = True
