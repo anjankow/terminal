@@ -13,6 +13,7 @@ from PortConfig import PortConfig
 from CommandHolder import CommandHolder
 from CommandEditor import CommandEditor
 from SyncCharsDialog import SyncCharsDialog
+from TerminalDisplay import TerminalDisplay
 from resources import *
 
 
@@ -20,14 +21,9 @@ qtCreatorFile = "TerminalWin.ui"
 Ui_TerminalWin, QtBaseClass = uic.loadUiType(qtCreatorFile)
 
 
-class IncomingType(Enum):
-    NOTIFICATION = 0
-    RESPONSE = 1
-
 class ThreadEvent(QObject):
     # events coming from another thread
     bytesRead = pyqtSignal(str)
-
 
 class CommandGroup:
     def __init__(self, textEdit, sendButton, commandLabel):
@@ -41,6 +37,7 @@ class TerminalWin(QtWidgets.QMainWindow, Ui_TerminalWin):
         QtWidgets.QMainWindow.__init__(self)
         Ui_TerminalWin.__init__(self)
         self.setupUi(self)
+        self.terminalDisplay = TerminalDisplay(self.terminal)
 
         # initialize command groups
         self.commandGroups = [
@@ -50,11 +47,6 @@ class TerminalWin(QtWidgets.QMainWindow, Ui_TerminalWin):
             CommandGroup(self.lineEdit_3, self.sendButton_3, self.label_3),
             CommandGroup(self.lineEdit_4, self.sendButton_4, self.label_4),
         ]
-
-        self.terminal.setPlainText('')
-
-        # lock for displayed communication data
-        self.dataLock = Lock()
 
         # load the commands from the config file
         self.commandHolder = CommandHolder(CONFIG_FILE)
@@ -78,13 +70,12 @@ class TerminalWin(QtWidgets.QMainWindow, Ui_TerminalWin):
         else:
             self.updateOnClosedPort()
 
-        self.setStyles()
+        for commandGroup in self.commandGroups:
+            commandGroup.commandTextEdit.setStyleSheet('color: ' + CMDEDITFONT_COLOR + ';')
 
+        # connect read event with printing function
         self.threadEvent = ThreadEvent()
-        self.threadEvent.bytesRead.connect(lambda readByte: self.printResponse(readByte))
-
-        self.syncChars = SYNC_CHARS
-        self.lastCharsRead = ''
+        self.threadEvent.bytesRead.connect(lambda readByte: self.terminalDisplay.printResponse(readByte))
 
 
     def assignConnections(self):
@@ -109,35 +100,17 @@ class TerminalWin(QtWidgets.QMainWindow, Ui_TerminalWin):
 
     # function called whenever a byte is read
     def readCallback(self, hexByte):
-        with self.dataLock:
-            self.threadEvent.bytesRead.emit(hexByte)
+        self.threadEvent.bytesRead.emit(hexByte)
 
     def changeSyncChars(self):
         dialog = SyncCharsDialog()
         ret = dialog.exec_()
         # if the user pressed OK, fill text boxes with the given command set
         if ret == QtWidgets.QDialog.Accepted:
-            self.syncChars = dialog.lineEdit.text().replace(' ','')
+            self.terminalDisplay.updateSyncChars(dialog.lineEdit.text())
 
     def clearScreen(self):
-
-#        self.terminal.moveCursor(QTextCursor.PreviousWord)
-#        self.terminal.moveCursor(QTextCursor.PreviousWord)
-#        self.terminal.moveCursor(QTextCursor.PreviousWord)
-##        cursor = self.terminal.textCursor()
-##        cursor.charFormat().setUnderlineColor(QColor("red"))
-#        responseStyle = " <span style=\"  color:" + RESPONSE_COLOR + ";\" > "
-#        self.terminal.insertHtml(responseStyle)
-#        self.terminal.moveCursor(QTextCursor.End)
-#        text = 'ppppp'
-#        self.terminal.insertHtml(text)
-##        self.terminal.insertHtml('AAAAAA')
-#        self.terminal.insertHtml(" </span> ")
-#        self.terminal.moveCursor(QTextCursor.End)
-##        print(self.terminal.toHtml())
-#        self.terminal.update()
-        self.terminal.clear()
-
+        self.terminalDisplay.clear()
 
     def editCommands(self):
         dialog = CommandEditor(self.commandHolder)
@@ -149,7 +122,6 @@ class TerminalWin(QtWidgets.QMainWindow, Ui_TerminalWin):
                 # update UI using the active configuration
                 self.loadCommandSet(self.commandHolder.getActiveCommandSet())
         self.updateCombobox()
-
 
 
     def loadCommandSet(self, commandSetName):
@@ -217,57 +189,8 @@ class TerminalWin(QtWidgets.QMainWindow, Ui_TerminalWin):
         if command != "":
             # write from the serial port
             self.serialPort.write(command)
-            with self.dataLock:
-                # print the command on the terminal
-                print("Sending command" + str(commandNum) +': ', command)
-                self.printCommand(command)
-                self.terminal.moveCursor(QTextCursor.End)
-                self.firstRspAfterCmd = True
-
-    # insert a new line if the sync sequence has been received
-    def applySyncSequence(self):
-        # compare not including the spaces
-        lastCharsSpaceless = self.lastCharsRead.replace(' ','')
-        syncCharsSpaceless = self.syncChars.replace(' ','')
-        if len(lastCharsSpaceless) == len(syncCharsSpaceless):
-            if lastCharsSpaceless == syncCharsSpaceless:
-                with self.dataLock:
-                    # subtract 2 characters, because the new chars hasn't been added yet
-                    for i in range(0, len(syncCharsSpaceless) - 2, 2):
-                        self.terminal.moveCursor(QTextCursor.PreviousWord)
-                    self.terminal.insertHtml('<br/> ')
-                    print('New line added')
-                    self.terminal.moveCursor(QTextCursor.End)
-                # clear the stored chars
-                self.lastCharsRead = ''
-            else:
-                # if the sequence doesn't match, delete first two chars (one hex number) from the sequence
-                self.lastCharsRead = self.lastCharsRead[3:]
-
-
-    # function called on bytesRead event
-    def printResponse(self, text):
-        text += ' '
-
-        # check if a sync pattern is given
-        if self.firstRspAfterCmd:
-            self.firstRspAfterCmd = False
-        else:
-            self.lastCharsRead += text
-            self.applySyncSequence()
-
-        # add received text to the terminal display
-        with self.dataLock:
-            text = "<span style=\"  color:" + RESPONSE_COLOR + ";\" >"  + text + "</span> "
-            text = text + ' '
-            self.terminal.insertHtml(text)
-            self.terminal.moveCursor(QTextCursor.End)
-
-    def printCommand(self, text):
-        text = "<span style=\"  color:" + COMMAND_COLOR + ";\" >"  + text + "</span><br/>"
-        self.terminal.append('')
-        self.terminal.insertHtml(text)
-        self.terminal.append('')
+            print("Sending command" + str(commandNum) +': ', command)
+            self.terminalDisplay.writeCommand(command)
 
     def updateOnClosedPort(self):
         # port is open, change the button functionality to 'Open'
@@ -286,18 +209,6 @@ class TerminalWin(QtWidgets.QMainWindow, Ui_TerminalWin):
         self.openButton.setText('Close')
         for command in self.commandGroups:
             command.sendButton.setEnabled(True)
-
-    def setStyles(self):
-        # set style of the console window
-        font = QtGui.QFont()
-        font.setPointSize(12)
-        font.setFamily('Consolas')
-        self.terminal.setFont(font)
-        self.terminal.setStyleSheet('background-color: ' + TERMINALBCKGND_COLOR + ';')
-
-        for commandGroup in self.commandGroups:
-            commandGroup.commandTextEdit.setStyleSheet('color: ' + CMDEDITFONT_COLOR + ';')
-
 
 
 
