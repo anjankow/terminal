@@ -3,7 +3,7 @@ import serial
 import re
 import time
 from serial.tools import list_ports
-from threading import Thread
+from threading import Thread, Lock
 
 
 def findPorts():
@@ -31,6 +31,11 @@ class SerialPort:
         self.__readingThread = None
 
         self.debug = debug
+        self.__incomingBytesCnt = 0
+
+        # lock to update number of read bytes
+        self.dataLock = Lock()
+
 
     def __del__(self):
         self.close()
@@ -62,6 +67,7 @@ class SerialPort:
         self.DEBUG_LOG('Written: ', data)
 
     def startReading(self):
+        self.__incomingBytesCnt = 0
         self.__continueReading = True
         self.__readingThread = Thread(target=self.__readFromPort, daemon=False)
         self.__readingThread.start()
@@ -81,15 +87,21 @@ class SerialPort:
         # read with no timeout - wait indefinitely
         self.__serialCom.timeout = None
 
-        numOfBytes = 0
         while self.__continueReading:
             byte = self.__serialCom.read(size=1)
             hexByte = str(byte.hex())
             if hexByte != '':
-                numOfBytes += 1
+                with self.dataLock:
+                    self.__incomingBytesCnt += 1
                 # something has been read, call the callback function
-                self.DEBUG_LOG('Read!', numOfBytes, 'Data = 0x', hexByte)
+                self.DEBUG_LOG('Read! Data = 0x', hexByte)
                 self.readCallback(hexByte)
+
+    def getIncomingBytesCnt(self):
+        with self.dataLock:
+            num = self.__incomingBytesCnt
+        return num
+
 
     def DEBUG_LOG(self, *args):
         if self.debug:

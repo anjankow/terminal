@@ -101,6 +101,7 @@ class TerminalWin(QtWidgets.QMainWindow, Ui_TerminalWin):
     # function called whenever a byte is read
     def readCallback(self, hexByte):
         self.threadEvent.bytesRead.emit(hexByte)
+        self.incomingCnt.setText(str(self.serialPort.getIncomingBytesCnt()))
 
     def changeSyncChars(self):
         dialog = SyncCharsDialog()
@@ -200,6 +201,7 @@ class TerminalWin(QtWidgets.QMainWindow, Ui_TerminalWin):
         self.openButton.setText('Open')
         for command in self.commandGroups:
             command.sendButton.setDisabled(True)
+        self.incomingCnt.setStyleSheet('background-color:rgb(216, 220, 240);')
 
     def updateOnOpenedPort(self):
         # port is open, change the button functionality to 'Close'
@@ -209,6 +211,7 @@ class TerminalWin(QtWidgets.QMainWindow, Ui_TerminalWin):
         self.openButton.setText('Close')
         for command in self.commandGroups:
             command.sendButton.setEnabled(True)
+        self.incomingCnt.setStyleSheet('background-color:white')
 
 
 
