@@ -71,16 +71,6 @@
     <string>Enter sync characters (hex)</string>
    </property>
   </widget>
-  <widget class="QListView" name="listView">
-   <property name="geometry">
-    <rect>
-     <x>50</x>
-     <y>30</y>
-     <width>256</width>
-     <height>192</height>
-    </rect>
-   </property>
-  </widget>
  </widget>
  <resources/>
  <connections>

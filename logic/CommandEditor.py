@@ -5,11 +5,11 @@ import xml.etree.ElementTree as ETree
 from PyQt5 import QtCore, QtGui, QtWidgets, uic
 from PyQt5.QtWidgets import QDialog, QLineEdit
 from PyQt5.QtGui import QColor
-from SerialPort import SerialPort
 
-from CommandHolder import *
+from . import SerialPort
+from . import CommandHolder
 
-qtCreatorFile = "CommandEditor.ui"
+qtCreatorFile = "./ui/CommandEditor.ui"
 Ui_CommandEditor, QtBaseClass = uic.loadUiType(qtCreatorFile)
 
 class CommandTextBoxes:

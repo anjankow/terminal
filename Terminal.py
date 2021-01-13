@@ -1,23 +1,18 @@
-import sys
-import serial
-from threading import Lock
-from enum import Enum
-
 from PyQt5 import QtCore, QtGui, QtWidgets, uic
 from PyQt5.QtWidgets import QMessageBox, QDialog
 from PyQt5.QtGui import QColor, QTextCursor
 from PyQt5.QtCore import QObject, pyqtSignal
 
-from SerialPort import SerialPort, findPorts
-from PortConfig import PortConfig
-from CommandHolder import CommandHolder
-from CommandEditor import CommandEditor
-from SyncCharsDialog import SyncCharsDialog
-from TerminalDisplay import TerminalDisplay
-from resources import *
+import sys
+import serial
+from threading import Lock
+from enum import Enum
 
+from logic import *
+from logic.resources import *
+from logic.SerialPort import findPorts
 
-qtCreatorFile = "TerminalWin.ui"
+qtCreatorFile = "ui/TerminalWin.ui"
 Ui_TerminalWin, QtBaseClass = uic.loadUiType(qtCreatorFile)
 
 

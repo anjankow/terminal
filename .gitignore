@@ -1,2 +1,3 @@
 *.pyproject.user
 __pycache__/*
+*.xml
