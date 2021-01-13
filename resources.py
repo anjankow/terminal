@@ -9,3 +9,4 @@ TERMINALBCKGND_COLOR = 'rgb(53, 43, 65)'
 CMDEDITFONT_COLOR = 'rgb(113, 107, 124)'
 
 CONFIG_FILE = 'commandConfig.xml'
+SYNC_CHARS = '55 43 49 '

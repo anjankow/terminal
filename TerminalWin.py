@@ -12,6 +12,7 @@ from SerialPort import SerialPort, findPorts
 from PortConfig import PortConfig
 from CommandHolder import CommandHolder
 from CommandEditor import CommandEditor
+from SyncCharsDialog import SyncCharsDialog
 from resources import *
 
 
@@ -69,7 +70,7 @@ class TerminalWin(QtWidgets.QMainWindow, Ui_TerminalWin):
             portName = ports[0]
         else:
             portName = ''
-        self.serialPort = SerialPort(portName, self.readCallback)
+        self.serialPort = SerialPort(portName, self.readCallback, debug=False)
 
         # open the port if any or close it to set GUI to the corresponding state
         if portName != '':
@@ -82,7 +83,8 @@ class TerminalWin(QtWidgets.QMainWindow, Ui_TerminalWin):
         self.threadEvent = ThreadEvent()
         self.threadEvent.bytesRead.connect(lambda readByte: self.printResponse(readByte))
 
-        self.incomingType = IncomingType.NOTIFICATION
+        self.syncChars = SYNC_CHARS
+        self.lastCharsRead = ''
 
 
     def assignConnections(self):
@@ -100,6 +102,7 @@ class TerminalWin(QtWidgets.QMainWindow, Ui_TerminalWin):
 
         # assign actions to menu
         self.actionPort.triggered.connect(self.configurePort)
+        self.actionSyncCharacters.triggered.connect(self.changeSyncChars)
 
         self.comboBox.currentTextChanged.connect(self.updateOnComboboxChange)
 
@@ -109,38 +112,31 @@ class TerminalWin(QtWidgets.QMainWindow, Ui_TerminalWin):
         with self.dataLock:
             self.threadEvent.bytesRead.emit(hexByte)
 
-
-    def onIncomingBytes(self, text):
-        self.interpret(text)
-        if self.incomingType == IncomingType.NOTIFICATION:
-            self.printNotification(text)
-        elif self.incomingType == IncomingType.RESPONSE:
-            self.printResponse(text)
-        else:
-            pass
-
-    def interpret(self, text):
-        self.lastReceived += text
-
-
+    def changeSyncChars(self):
+        dialog = SyncCharsDialog()
+        ret = dialog.exec_()
+        # if the user pressed OK, fill text boxes with the given command set
+        if ret == QtWidgets.QDialog.Accepted:
+            self.syncChars = dialog.lineEdit.text().replace(' ','')
 
     def clearScreen(self):
 
-        self.terminal.moveCursor(QTextCursor.PreviousWord)
-        self.terminal.moveCursor(QTextCursor.PreviousWord)
-        self.terminal.moveCursor(QTextCursor.PreviousWord)
-        responseStyle = "<span style=\"  color:" + RESPONSE_COLOR + ";\" >"
-        self.terminal.insertHtml(responseStyle)
+#        self.terminal.moveCursor(QTextCursor.PreviousWord)
+#        self.terminal.moveCursor(QTextCursor.PreviousWord)
+#        self.terminal.moveCursor(QTextCursor.PreviousWord)
+##        cursor = self.terminal.textCursor()
+##        cursor.charFormat().setUnderlineColor(QColor("red"))
+#        responseStyle = " <span style=\"  color:" + RESPONSE_COLOR + ";\" > "
+#        self.terminal.insertHtml(responseStyle)
 #        self.terminal.moveCursor(QTextCursor.End)
-#        self.terminal.insertHtml(text + ' ')
-        self.terminal.insertHtml('AAAAAA')
-        self.terminal.insertHtml("</span>")
-        print(self.terminal.toHtml())
-        self.terminal.update()
-#        print('Moving cursor from ', start)
-#        self.terminal.select(
-#        self.removeSelectedText()
-#        self.terminal.clear()
+#        text = 'ppppp'
+#        self.terminal.insertHtml(text)
+##        self.terminal.insertHtml('AAAAAA')
+#        self.terminal.insertHtml(" </span> ")
+#        self.terminal.moveCursor(QTextCursor.End)
+##        print(self.terminal.toHtml())
+#        self.terminal.update()
+        self.terminal.clear()
 
 
     def editCommands(self):
@@ -226,11 +222,43 @@ class TerminalWin(QtWidgets.QMainWindow, Ui_TerminalWin):
                 print("Sending command" + str(commandNum) +': ', command)
                 self.printCommand(command)
                 self.terminal.moveCursor(QTextCursor.End)
+                self.firstRspAfterCmd = True
+
+    # insert a new line if the sync sequence has been received
+    def applySyncSequence(self):
+        # compare not including the spaces
+        lastCharsSpaceless = self.lastCharsRead.replace(' ','')
+        syncCharsSpaceless = self.syncChars.replace(' ','')
+        if len(lastCharsSpaceless) == len(syncCharsSpaceless):
+            if lastCharsSpaceless == syncCharsSpaceless:
+                with self.dataLock:
+                    # subtract 2 characters, because the new chars hasn't been added yet
+                    for i in range(0, len(syncCharsSpaceless) - 2, 2):
+                        self.terminal.moveCursor(QTextCursor.PreviousWord)
+                    self.terminal.insertHtml('<br/> ')
+                    print('New line added')
+                    self.terminal.moveCursor(QTextCursor.End)
+                # clear the stored chars
+                self.lastCharsRead = ''
+            else:
+                # if the sequence doesn't match, delete first two chars (one hex number) from the sequence
+                self.lastCharsRead = self.lastCharsRead[3:]
+
 
     # function called on bytesRead event
     def printResponse(self, text):
-#        text = "<span style=\"  color:" + RESPONSE_COLOR + ";\" >"  + text + " </span>"
+        text += ' '
+
+        # check if a sync pattern is given
+        if self.firstRspAfterCmd:
+            self.firstRspAfterCmd = False
+        else:
+            self.lastCharsRead += text
+            self.applySyncSequence()
+
+        # add received text to the terminal display
         with self.dataLock:
+            text = "<span style=\"  color:" + RESPONSE_COLOR + ";\" >"  + text + "</span> "
             text = text + ' '
             self.terminal.insertHtml(text)
             self.terminal.moveCursor(QTextCursor.End)

@@ -1,3 +1,3 @@
 {
-    "files": ["SerialPort.py","TerminalWin.py","TerminalWin.ui","CommandHolder.py","PortConfig.py","myTerminal.pyproject.user","resources.py","CommandEditor.ui","PortConfig.ui","CommandEditor.py","main.py","Interpreter.py"]
+    "files": ["PortConfig.ui","TerminalWin.py","TerminalWin.ui","main.py","SyncCharsDialog.ui","PortConfig.py","CommandEditor.py","resources.py","CommandEditor.ui","SerialPort.py","CommandHolder.py","myTerminal.pyproject.user","SyncCharsDialog.py"]
 }
