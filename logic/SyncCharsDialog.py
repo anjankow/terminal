@@ -1,12 +1,12 @@
 # This Python file uses the following encoding: utf-8
 import sys
+import os
 
 from PyQt5 import QtCore, QtGui, QtWidgets, uic
 from PyQt5.QtWidgets import QDialog
 from PyQt5.QtGui import QColor
 
-
-qtCreatorFile = "./ui/SyncCharsDialog.ui"
+qtCreatorFile = os.path.join(os.path.dirname(__file__), '..', 'ui/SyncCharsDialog.ui')
 Ui_SyncCharsDialog, QtBaseClass = uic.loadUiType(qtCreatorFile)
 
 

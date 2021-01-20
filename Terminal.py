@@ -4,6 +4,7 @@ from PyQt5.QtGui import QColor, QTextCursor
 from PyQt5.QtCore import QObject, pyqtSignal
 
 import sys
+import os
 import serial
 from threading import Lock
 from enum import Enum
@@ -12,9 +13,10 @@ from logic import *
 from logic.resources import *
 from logic.SerialPort import findPorts
 
-qtCreatorFile = "ui/TerminalWin.ui"
+qtCreatorFile = os.path.join(os.path.dirname(__file__), 'ui/TerminalWin.ui')
 Ui_TerminalWin, QtBaseClass = uic.loadUiType(qtCreatorFile)
 
+configFile = os.path.join(os.path.dirname(__file__), 'resources', 'commandConfig.xml')
 
 class ThreadEvent(QObject):
     # events coming from another thread
@@ -44,7 +46,7 @@ class TerminalWin(QtWidgets.QMainWindow, Ui_TerminalWin):
         ]
 
         # load the commands from the config file
-        self.commandHolder = CommandHolder(CONFIG_FILE)
+        self.commandHolder = CommandHolder(configFile)
         activeName = self.commandHolder.getActiveCommandSet()
         self.loadCommandSet(activeName)
         self.updateCombobox()
@@ -96,7 +98,7 @@ class TerminalWin(QtWidgets.QMainWindow, Ui_TerminalWin):
     # function called whenever a byte is read
     def readCallback(self, hexByte):
         self.threadEvent.bytesRead.emit(hexByte)
-        self.incomingCnt.setText(str(self.serialPort.getIncomingBytesCnt()))
+#        self.incomingCnt.setText(str(self.serialPort.getIncomingBytesCnt()))
 
     def changeSyncChars(self):
         dialog = SyncCharsDialog()
@@ -212,6 +214,7 @@ class TerminalWin(QtWidgets.QMainWindow, Ui_TerminalWin):
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
+    app.setWindowIcon(QtGui.QIcon('resources/terminal.ico'))
     window = TerminalWin()
     window.show()
     code = app.exec_()

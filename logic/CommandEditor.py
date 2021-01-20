@@ -1,5 +1,6 @@
 # This Python file uses the following encoding: utf-8
 import sys
+import os
 import xml.etree.ElementTree as ETree
 
 from PyQt5 import QtCore, QtGui, QtWidgets, uic
@@ -8,8 +9,9 @@ from PyQt5.QtGui import QColor
 
 from . import SerialPort
 from . import CommandHolder
+from .CommandHolder import Command
 
-qtCreatorFile = "./ui/CommandEditor.ui"
+qtCreatorFile = os.path.join(os.path.dirname(__file__), '..', 'ui/CommandEditor.ui')
 Ui_CommandEditor, QtBaseClass = uic.loadUiType(qtCreatorFile)
 
 class CommandTextBoxes:

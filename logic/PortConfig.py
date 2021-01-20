@@ -1,5 +1,6 @@
 # This Python file uses the following encoding: utf-8
 import sys
+import os
 
 from PyQt5 import QtCore, QtGui, QtWidgets, uic
 from PyQt5.QtWidgets import QDialog
@@ -7,7 +8,7 @@ from PyQt5.QtGui import QColor
 
 from .SerialPort import *
 
-qtCreatorFile = "./ui/PortConfig.ui"
+qtCreatorFile = os.path.join(os.path.dirname(__file__), '..', 'ui/PortConfig.ui')
 Ui_PortConfig, QtBaseClass = uic.loadUiType(qtCreatorFile)
 
 

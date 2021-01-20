@@ -16,8 +16,12 @@ class CommandHolder:
         self.__activeSet = None
         self.__xmlFile = xmlFile
         # load the data from xml, if it exists
-        if os.path.exists(xmlFile):
-            self.loadFromXml()
+        dirName = os.path.dirname(xmlFile)
+        if os.path.exists(dirName):
+            if os.path.exists(xmlFile):
+                self.loadFromXml()
+        else:
+            os.mkdir(dirName)
 
 
     def add(self, name, newCommandSet):
