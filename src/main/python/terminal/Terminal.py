@@ -9,14 +9,20 @@ import serial
 from threading import Lock
 from enum import Enum
 
-from logic import *
-from logic.resources import *
-from logic.SerialPort import findPorts
+from .base import app_cntxt, Ui_TerminalWin
+from .constants import *
+from .SerialPort import *
+from .TerminalDisplay import *
+from .CommandHolder import *
+from .PortConfig import *
+from .CommandEditor import *
+from .CommandHolder import *
+from .SyncCharsDialog import *
+from .TerminalAppContext import *
 
-qtCreatorFile = os.path.join(os.path.dirname(__file__), 'ui/TerminalWin.ui')
-Ui_TerminalWin, QtBaseClass = uic.loadUiType(qtCreatorFile)
 
-configFile = os.path.join(os.path.dirname(__file__), 'resources', 'commandConfig.xml')
+
+configFile = os.path.join(os.path.dirname(__file__), '../resources/user/commandConfig.xml')
 
 class ThreadEvent(QObject):
     # events coming from another thread
@@ -29,12 +35,17 @@ class CommandGroup:
         self.commandLabel = commandLabel
 
 
-class TerminalWin(QtWidgets.QMainWindow, Ui_TerminalWin):
+class Terminal(QtWidgets.QMainWindow, Ui_TerminalWin):
     def __init__(self):
+        print('Terminal init')
         QtWidgets.QMainWindow.__init__(self)
+        print('aaa')
         Ui_TerminalWin.__init__(self)
+        print('aaa')
         self.setupUi(self)
+        print('aaa')
         self.terminalDisplay = TerminalDisplay(self.terminal)
+        print('aaa')
 
         # initialize command groups
         self.commandGroups = [
@@ -73,6 +84,7 @@ class TerminalWin(QtWidgets.QMainWindow, Ui_TerminalWin):
         # connect read event with printing function
         self.threadEvent = ThreadEvent()
         self.threadEvent.bytesRead.connect(lambda readByte: self.terminalDisplay.printResponse(readByte))
+        print('Terminal init done')
 
 
     def assignConnections(self):

@@ -11,9 +11,6 @@ from . import SerialPort
 from . import CommandHolder
 from .CommandHolder import Command
 
-qtCreatorFile = os.path.join(os.path.dirname(__file__), '..', 'ui/CommandEditor.ui')
-Ui_CommandEditor, QtBaseClass = uic.loadUiType(qtCreatorFile)
-
 class CommandTextBoxes:
     def __init__(self, command: QLineEdit, label: QLineEdit):
         self.command = command

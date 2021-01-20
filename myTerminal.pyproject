@@ -1,3 +1,19 @@
 {
-    "files": ["logic/SyncCharsDialog.py","ui/CommandEditor.ui","ui/SyncCharsDialog.ui","Terminal.py","logic/CommandEditor.py","logic/SerialPort.py","ui/PortConfig.ui","ui/TerminalWin.ui","logic/PortConfig.py","logic/TerminalDisplay.py","logic/CommandHolder.py","logic/resources.py","logic/__init__.py"]
+    "files": [
+        "src/main/python/main.py",
+        "src/main/python/terminal/base.py",
+        "src/main/python/terminal/TerminalDisplay.py",
+        "src/main/python/terminal/TerminalAppContext.py",
+        "src/main/resources/base/ui/CommandEditor.ui",
+        "src/main/resources/base/ui/SyncCharsDialog.ui",
+        "src/main/python/terminal/SerialPort.py",
+        "src/main/resources/base/ui/PortConfig.ui",
+        "src/main/python/terminal/CommandEditor.py",
+        "src/main/python/terminal/PortConfig.py",
+        "src/main/python/terminal/__init__.py",
+        "src/main/python/terminal/SyncCharsDialog.py",
+        "src/main/resources/base/ui/TerminalWin.ui",
+        "src/main/python/terminal/constants.py",
+        "src/main/python/terminal/Terminal.py",
+        "src/main/python/terminal/CommandHolder.py"]
 }

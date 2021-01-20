@@ -6,7 +6,7 @@ from PyQt5.QtGui import QTextCursor
 
 from threading import Lock
 
-from .resources import *
+from .constants import *
 
 class TerminalDisplay:
     def __init__(self, terminalDisplay: QTextEdit):
