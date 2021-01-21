@@ -6,7 +6,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets, uic
 from PyQt5.QtWidgets import QDialog
 from PyQt5.QtGui import QColor
 
-from .base import app_cntxt, Ui_SyncCharsDialog
+from .base import Ui_SyncCharsDialog
 
 class SyncCharsDialog(QDialog, Ui_SyncCharsDialog):
     def __init__(self):

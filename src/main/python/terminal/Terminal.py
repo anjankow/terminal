@@ -9,9 +9,9 @@ import serial
 from threading import Lock
 from enum import Enum
 
-from .base import app_cntxt, Ui_TerminalWin
+from .base import Ui_TerminalWin
 from .constants import *
-from .SerialPort import *
+from .serialport import *
 from .TerminalDisplay import *
 from .CommandHolder import *
 from .PortConfig import *
@@ -22,7 +22,7 @@ from .TerminalAppContext import *
 
 
 
-configFile = os.path.join(os.path.dirname(__file__), '../resources/user/commandConfig.xml')
+configFile = os.path.join(os.path.dirname(__file__), '../../resources/user/commandConfig.xml')
 
 class ThreadEvent(QObject):
     # events coming from another thread
@@ -227,7 +227,7 @@ class Terminal(QtWidgets.QMainWindow, Ui_TerminalWin):
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     app.setWindowIcon(QtGui.QIcon('resources/terminal.ico'))
-    window = TerminalWin()
+    window = Terminal()
     window.show()
     code = app.exec_()
     window.closePort()

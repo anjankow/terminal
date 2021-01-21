@@ -6,8 +6,8 @@ from PyQt5 import QtCore, QtGui, QtWidgets, uic
 from PyQt5.QtWidgets import QDialog
 from PyQt5.QtGui import QColor
 
-from .base import app_cntxt, Ui_PortConfig
-from .SerialPort import *
+from .base import Ui_PortConfig
+from .serialport import *
 
 
 class PortConfig(QDialog, Ui_PortConfig):
