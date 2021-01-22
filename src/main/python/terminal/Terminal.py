@@ -18,11 +18,10 @@ from .PortConfig import *
 from .CommandEditor import *
 from .CommandHolder import *
 from .SyncCharsDialog import *
-from .TerminalAppContext import *
 
 
 
-configFile = os.path.join(os.path.dirname(__file__), '../../resources/user/commandConfig.xml')
+configFile = os.path.join(os.path.dirname(__file__), '../../resources/', CONFIG_FILE_NAME)
 
 class ThreadEvent(QObject):
     # events coming from another thread
@@ -37,15 +36,11 @@ class CommandGroup:
 
 class Terminal(QtWidgets.QMainWindow, Ui_TerminalWin):
     def __init__(self):
-        print('Terminal init')
+        print('Terminal init start')
         QtWidgets.QMainWindow.__init__(self)
-        print('aaa')
         Ui_TerminalWin.__init__(self)
-        print('aaa')
         self.setupUi(self)
-        print('aaa')
         self.terminalDisplay = TerminalDisplay(self.terminal)
-        print('aaa')
 
         # initialize command groups
         self.commandGroups = [

@@ -10,3 +10,5 @@ CMDEDITFONT_COLOR = 'rgb(113, 107, 124)'
 
 SYNC_CHARS = '55 43 49 '
 CHARS_LIMIT = 10000
+
+CONFIG_FILE_NAME = 'user/commandConfig.xml'

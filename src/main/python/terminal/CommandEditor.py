@@ -7,10 +7,10 @@ from PyQt5 import QtCore, QtGui, QtWidgets, uic
 from PyQt5.QtWidgets import QDialog, QLineEdit
 from PyQt5.QtGui import QColor
 
-from .serialport import SerialPort
-from . import CommandHolder
-from .CommandHolder import Command
 from .base import Ui_CommandEditor
+from .serialport import SerialPort
+from .CommandHolder import CommandHolder, Command
+
 
 class CommandTextBoxes:
     def __init__(self, command: QLineEdit, label: QLineEdit):
