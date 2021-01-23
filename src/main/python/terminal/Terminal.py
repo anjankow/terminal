@@ -3,6 +3,8 @@ from PyQt5.QtWidgets import QMessageBox, QDialog
 from PyQt5.QtGui import QColor, QTextCursor
 from PyQt5.QtCore import QObject, pyqtSignal
 
+from fbs_runtime.application_context.PyQt5 import ApplicationContext
+
 import sys
 import os
 import serial
@@ -20,9 +22,6 @@ from .CommandHolder import *
 from .SyncCharsDialog import *
 
 
-
-configFile = os.path.join(os.path.dirname(__file__), '../../resources/', CONFIG_FILE_NAME)
-
 class ThreadEvent(QObject):
     # events coming from another thread
     bytesRead = pyqtSignal(str)
@@ -35,11 +34,12 @@ class CommandGroup:
 
 
 class Terminal(QtWidgets.QMainWindow, Ui_TerminalWin):
-    def __init__(self):
+    def __init__(self, appcntxt: ApplicationContext):
         print('Terminal init start')
         QtWidgets.QMainWindow.__init__(self)
         Ui_TerminalWin.__init__(self)
         self.setupUi(self)
+        self.appcntxt = appcntxt
         self.terminalDisplay = TerminalDisplay(self.terminal)
 
         # initialize command groups
@@ -52,7 +52,7 @@ class Terminal(QtWidgets.QMainWindow, Ui_TerminalWin):
         ]
 
         # load the commands from the config file
-        self.commandHolder = CommandHolder(configFile)
+        self.commandHolder = CommandHolder(self.appcntxt.get_resource(CONFIG_FILE_NAME))
         activeName = self.commandHolder.getActiveCommandSet()
         self.loadCommandSet(activeName)
         self.updateCombobox()

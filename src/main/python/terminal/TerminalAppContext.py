@@ -7,7 +7,7 @@ from .Terminal import Terminal
 class TerminalAppContext(ApplicationContext):
 
     def run(self):
-        window = Terminal()
+        window = Terminal(self)
         window.show()
         code = self.app.exec_()
         window.closePort()
