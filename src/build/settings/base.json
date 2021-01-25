@@ -1,5 +1,5 @@
 {
-    "app_name": "LustigTerminal",
+    "app_name": "LustigesTerminal",
     "author": "anjankow",
     "main_module": "src/main/python/main.py",
     "version": "0.0.0"
