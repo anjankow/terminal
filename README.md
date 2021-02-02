@@ -1,5 +1,5 @@
 # Lustiges terminal
-** Terminal just for fun
+**Terminal just for fun**
 
 To use fbs build system, Python in version 3.5 or 3.6 is required.
 The application uses following libs:
