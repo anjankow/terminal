@@ -78,8 +78,12 @@ class Terminal(QtWidgets.QMainWindow, Ui_TerminalWin):
 
         # connect read event with printing function
         self.threadEvent = ThreadEvent()
-        self.threadEvent.bytesRead.connect(lambda readByte: self.terminalDisplay.printResponse(readByte))
+        self.threadEvent.bytesRead.connect(lambda readByte: self.reactOnBytesRead(readByte))
         print('Terminal init done')
+
+    def reactOnBytesRead(self, readByte):
+        self.terminalDisplay.printResponse(readByte)
+        self.incomingCnt.setText(str(self.serialPort.getIncomingBytesCnt()))
 
 
     def assignConnections(self):
@@ -105,7 +109,6 @@ class Terminal(QtWidgets.QMainWindow, Ui_TerminalWin):
     # function called whenever a byte is read
     def readCallback(self, hexByte):
         self.threadEvent.bytesRead.emit(hexByte)
-#        self.incomingCnt.setText(str(self.serialPort.getIncomingBytesCnt()))
 
     def changeSyncChars(self):
         dialog = SyncCharsDialog()
@@ -124,6 +127,7 @@ class Terminal(QtWidgets.QMainWindow, Ui_TerminalWin):
         if ret == QtWidgets.QDialog.Accepted:
             if dialog.dataEntered():
                 # the given configuration is the active one now
+
                 # update UI using the active configuration
                 self.loadCommandSet(self.commandHolder.getActiveCommandSet())
         self.updateCombobox()
