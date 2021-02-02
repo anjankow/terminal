@@ -6,7 +6,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets, uic
 from PyQt5.QtWidgets import QDialog
 from PyQt5.QtGui import QColor
 
-from .base import Ui_PortConfig
+from .Ui_PortConfig import Ui_PortConfig
 from .serialport import *
 
 

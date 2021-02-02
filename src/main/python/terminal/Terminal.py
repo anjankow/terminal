@@ -11,7 +11,7 @@ import serial
 from threading import Lock
 from enum import Enum
 
-from .base import Ui_TerminalWin
+from .Ui_TerminalWin import Ui_TerminalWin
 from .constants import *
 from .serialport import *
 from .TerminalDisplay import *
