@@ -17,9 +17,9 @@
    <widget class="QLineEdit" name="lineEdit_1">
     <property name="geometry">
      <rect>
-      <x>130</x>
+      <x>340</x>
       <y>410</y>
-      <width>191</width>
+      <width>210</width>
       <height>31</height>
      </rect>
     </property>
@@ -39,9 +39,9 @@
    <widget class="QLineEdit" name="lineEdit_2">
     <property name="geometry">
      <rect>
-      <x>130</x>
+      <x>340</x>
       <y>450</y>
-      <width>191</width>
+      <width>210</width>
       <height>31</height>
      </rect>
     </property>
@@ -64,9 +64,9 @@
    <widget class="QLineEdit" name="lineEdit_3">
     <property name="geometry">
      <rect>
-      <x>130</x>
+      <x>340</x>
       <y>490</y>
-      <width>191</width>
+      <width>210</width>
       <height>31</height>
      </rect>
     </property>
@@ -86,9 +86,9 @@
    <widget class="QLineEdit" name="lineEdit_4">
     <property name="geometry">
      <rect>
-      <x>130</x>
+      <x>340</x>
       <y>530</y>
-      <width>191</width>
+      <width>210</width>
       <height>31</height>
      </rect>
     </property>
@@ -111,7 +111,7 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>340</x>
+      <x>590</x>
       <y>410</y>
       <width>71</width>
       <height>28</height>
@@ -129,7 +129,7 @@
    <widget class="QPushButton" name="sendButton_2">
     <property name="geometry">
      <rect>
-      <x>340</x>
+      <x>590</x>
       <y>450</y>
       <width>71</width>
       <height>28</height>
@@ -147,7 +147,7 @@
    <widget class="QPushButton" name="sendButton_3">
     <property name="geometry">
      <rect>
-      <x>340</x>
+      <x>590</x>
       <y>490</y>
       <width>71</width>
       <height>28</height>
@@ -165,7 +165,7 @@
    <widget class="QPushButton" name="sendButton_4">
     <property name="geometry">
      <rect>
-      <x>340</x>
+      <x>590</x>
       <y>530</y>
       <width>71</width>
       <height>28</height>
@@ -178,124 +178,6 @@
     </property>
     <property name="text">
      <string>Send</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_2">
-    <property name="geometry">
-     <rect>
-      <x>445</x>
-      <y>450</y>
-      <width>69</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="maximumSize">
-     <size>
-      <width>281</width>
-      <height>16777215</height>
-     </size>
-    </property>
-    <property name="font">
-     <font>
-      <family>MS Shell Dlg 2</family>
-      <pointsize>9</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>Command 2</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_3">
-    <property name="geometry">
-     <rect>
-      <x>445</x>
-      <y>490</y>
-      <width>69</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="maximumSize">
-     <size>
-      <width>281</width>
-      <height>16777215</height>
-     </size>
-    </property>
-    <property name="font">
-     <font>
-      <family>MS Shell Dlg 2</family>
-      <pointsize>9</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>Command 3</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_4">
-    <property name="geometry">
-     <rect>
-      <x>445</x>
-      <y>530</y>
-      <width>69</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="maximumSize">
-     <size>
-      <width>281</width>
-      <height>16777215</height>
-     </size>
-    </property>
-    <property name="font">
-     <font>
-      <family>MS Shell Dlg 2</family>
-      <pointsize>9</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>Command 4</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_1">
-    <property name="geometry">
-     <rect>
-      <x>445</x>
-      <y>410</y>
-      <width>69</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="maximumSize">
-     <size>
-      <width>281</width>
-      <height>16777215</height>
-     </size>
-    </property>
-    <property name="font">
-     <font>
-      <family>MS Shell Dlg 2</family>
-      <pointsize>9</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>Command 1</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="editButton">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>370</y>
-      <width>51</width>
-      <height>71</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>8</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>Edit</string>
     </property>
    </widget>
    <widget class="QPushButton" name="clearButton">
@@ -319,9 +201,9 @@
    <widget class="QLineEdit" name="lineEdit_0">
     <property name="geometry">
      <rect>
-      <x>130</x>
+      <x>340</x>
       <y>370</y>
-      <width>191</width>
+      <width>210</width>
       <height>31</height>
      </rect>
     </property>
@@ -331,7 +213,13 @@
       <pointsize>9</pointsize>
      </font>
     </property>
+    <property name="styleSheet">
+     <string notr="true">color:rgb(42, 31, 95);</string>
+    </property>
     <property name="inputMask">
+     <string/>
+    </property>
+    <property name="text">
      <string/>
     </property>
     <property name="plainText" stdset="0">
@@ -344,7 +232,7 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>340</x>
+      <x>590</x>
       <y>370</y>
       <width>71</width>
       <height>28</height>
@@ -359,36 +247,11 @@
      <string>Send</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_0">
-    <property name="geometry">
-     <rect>
-      <x>445</x>
-      <y>370</y>
-      <width>69</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="maximumSize">
-     <size>
-      <width>281</width>
-      <height>16777215</height>
-     </size>
-    </property>
-    <property name="font">
-     <font>
-      <family>MS Shell Dlg 2</family>
-      <pointsize>9</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>Command 0</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="openButton">
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>450</y>
+      <y>360</y>
       <width>51</width>
       <height>41</height>
      </rect>
@@ -408,7 +271,7 @@
    <widget class="QComboBox" name="comboBox">
     <property name="geometry">
      <rect>
-      <x>130</x>
+      <x>100</x>
       <y>320</y>
       <width>371</width>
       <height>31</height>
@@ -462,11 +325,14 @@ p, li { white-space: pre-wrap; }
    <widget class="QLineEdit" name="incomingCnt">
     <property name="geometry">
      <rect>
-      <x>620</x>
+      <x>590</x>
       <y>320</y>
       <width>71</width>
       <height>31</height>
      </rect>
+    </property>
+    <property name="focusPolicy">
+     <enum>Qt::NoFocus</enum>
     </property>
     <property name="styleSheet">
      <string notr="true">background-color:rgb(216, 220, 240);</string>
@@ -475,10 +341,10 @@ p, li { white-space: pre-wrap; }
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="QLabel" name="label_5">
+   <widget class="QLabel" name="incomingCntLabel">
     <property name="geometry">
      <rect>
-      <x>540</x>
+      <x>510</x>
       <y>310</y>
       <width>61</width>
       <height>51</height>
@@ -506,6 +372,233 @@ p, li { white-space: pre-wrap; }
      <bool>true</bool>
     </property>
    </widget>
+   <widget class="QLineEdit" name="label_4">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>530</y>
+      <width>230</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="inputMask">
+     <string/>
+    </property>
+    <property name="plainText" stdset="0">
+     <string notr="true"/>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>490</y>
+      <width>230</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="inputMask">
+     <string/>
+    </property>
+    <property name="plainText" stdset="0">
+     <string notr="true"/>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>450</y>
+      <width>230</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="inputMask">
+     <string/>
+    </property>
+    <property name="plainText" stdset="0">
+     <string notr="true"/>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="label_1">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>410</y>
+      <width>230</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="inputMask">
+     <string/>
+    </property>
+    <property name="plainText" stdset="0">
+     <string notr="true"/>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="label_0">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>370</y>
+      <width>230</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="inputMask">
+     <string/>
+    </property>
+    <property name="plainText" stdset="0">
+     <string notr="true"/>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="label_5">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>570</y>
+      <width>230</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="inputMask">
+     <string/>
+    </property>
+    <property name="plainText" stdset="0">
+     <string notr="true"/>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit_5">
+    <property name="geometry">
+     <rect>
+      <x>340</x>
+      <y>570</y>
+      <width>210</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Consolas</family>
+      <pointsize>9</pointsize>
+     </font>
+    </property>
+    <property name="inputMask">
+     <string/>
+    </property>
+    <property name="plainText" stdset="0">
+     <string notr="true"/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="sendButton_5">
+    <property name="geometry">
+     <rect>
+      <x>590</x>
+      <y>570</y>
+      <width>71</width>
+      <height>28</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>9</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Send</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="saveCmdButton">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>410</y>
+      <width>51</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>8</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="text">
+     <string>Save
+Cmds</string>
+    </property>
+   </widget>
    <zorder>terminal</zorder>
    <zorder>lineEdit_1</zorder>
    <zorder>lineEdit_2</zorder>
@@ -515,19 +608,22 @@ p, li { white-space: pre-wrap; }
    <zorder>sendButton_2</zorder>
    <zorder>sendButton_3</zorder>
    <zorder>sendButton_4</zorder>
-   <zorder>label_2</zorder>
-   <zorder>label_3</zorder>
-   <zorder>label_4</zorder>
-   <zorder>label_1</zorder>
-   <zorder>editButton</zorder>
    <zorder>clearButton</zorder>
    <zorder>lineEdit_0</zorder>
    <zorder>sendButton_0</zorder>
-   <zorder>label_0</zorder>
    <zorder>openButton</zorder>
    <zorder>comboBox</zorder>
    <zorder>incomingCnt</zorder>
+   <zorder>incomingCntLabel</zorder>
+   <zorder>label_4</zorder>
+   <zorder>label_3</zorder>
+   <zorder>label_2</zorder>
+   <zorder>label_1</zorder>
+   <zorder>label_0</zorder>
    <zorder>label_5</zorder>
+   <zorder>lineEdit_5</zorder>
+   <zorder>sendButton_5</zorder>
+   <zorder>saveCmdButton</zorder>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <widget class="QMenuBar" name="menuBar">
@@ -578,19 +674,29 @@ p, li { white-space: pre-wrap; }
  </widget>
  <tabstops>
   <tabstop>comboBox</tabstop>
+  <tabstop>label_0</tabstop>
   <tabstop>lineEdit_0</tabstop>
   <tabstop>sendButton_0</tabstop>
+  <tabstop>label_1</tabstop>
   <tabstop>lineEdit_1</tabstop>
   <tabstop>sendButton_1</tabstop>
+  <tabstop>label_2</tabstop>
   <tabstop>lineEdit_2</tabstop>
   <tabstop>sendButton_2</tabstop>
+  <tabstop>label_3</tabstop>
   <tabstop>lineEdit_3</tabstop>
   <tabstop>sendButton_3</tabstop>
+  <tabstop>label_4</tabstop>
   <tabstop>lineEdit_4</tabstop>
   <tabstop>sendButton_4</tabstop>
+  <tabstop>label_5</tabstop>
+  <tabstop>lineEdit_5</tabstop>
+  <tabstop>sendButton_5</tabstop>
   <tabstop>clearButton</tabstop>
-  <tabstop>editButton</tabstop>
   <tabstop>openButton</tabstop>
+  <tabstop>saveCmdButton</tabstop>
+  <tabstop>terminal</tabstop>
+  <tabstop>incomingCnt</tabstop>
  </tabstops>
  <resources/>
  <connections/>

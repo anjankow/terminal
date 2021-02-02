@@ -26,10 +26,14 @@ class CommandHolder:
         if name in self.__allCommandSets:
             del self.__allCommandSets[name]
         self.__allCommandSets[name] = newCommandSet
+        self.__activeSet = name
+        print('Changing active set in CmdHolder to ', self.__activeSet)
 
     def delete(self, name: str):
         if name in self.__allCommandSets:
             del self.__allCommandSets[name]
+        if name == self.__activeSet:
+            self.__activeSet = None
 
     def getCommandSet(self, name: str):
         if name in self.__allCommandSets:
@@ -99,6 +103,7 @@ class CommandHolder:
 
     def getActiveCommandSet(self):
         ''' Gets a command set name marked as active '''
+        print('Active command set in CmdHolder: ', self.__activeSet)
         if self.__activeSet and self.__activeSet in self.__allCommandSets:
             return self.__activeSet
         else:

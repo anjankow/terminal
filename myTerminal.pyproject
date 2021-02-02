@@ -15,5 +15,8 @@
         "src/main/resources/base/ui/TerminalWin.ui",
         "src/main/python/terminal/constants.py",
         "src/main/python/terminal/CommandHolder.py",
-        "src/main/python/terminal/uihelper.py"]
+        "src/main/python/terminal/uihelper.py",
+        "src/main/python/terminal/SaveCmdDialog.py",
+        "src/main/resources/base/ui/SaveCmdDialog.ui"
+        ]
 }

@@ -17,7 +17,7 @@ from .serialport import *
 from .TerminalDisplay import *
 from .CommandHolder import *
 from .PortConfig import *
-from .CommandEditor import *
+from .SaveCmdDialog import *
 from .CommandHolder import *
 from .SyncCharsDialog import *
 
@@ -49,6 +49,7 @@ class Terminal(QtWidgets.QMainWindow, Ui_TerminalWin):
             CommandGroup(self.lineEdit_2, self.sendButton_2, self.label_2),
             CommandGroup(self.lineEdit_3, self.sendButton_3, self.label_3),
             CommandGroup(self.lineEdit_4, self.sendButton_4, self.label_4),
+            CommandGroup(self.lineEdit_5, self.sendButton_5, self.label_5),
         ]
 
         # load the commands from the config file
@@ -93,10 +94,11 @@ class Terminal(QtWidgets.QMainWindow, Ui_TerminalWin):
         self.sendButton_2.clicked.connect(lambda: self.send(2))
         self.sendButton_3.clicked.connect(lambda: self.send(3))
         self.sendButton_4.clicked.connect(lambda: self.send(4))
+        self.sendButton_5.clicked.connect(lambda: self.send(5))
 
         # assign actions to the other buttons
         self.openButton.clicked.connect(self.closePort)
-        self.editButton.clicked.connect(self.editCommands)
+        self.saveCmdButton.clicked.connect(self.saveCommands)
         self.clearButton.clicked.connect(self.clearScreen)
 
         # assign actions to menu
@@ -120,24 +122,41 @@ class Terminal(QtWidgets.QMainWindow, Ui_TerminalWin):
     def clearScreen(self):
         self.terminalDisplay.clear()
 
-    def editCommands(self):
-        dialog = CommandEditor(self.commandHolder)
+    def getDataFromTextBoxes(self):
+        commandList = []
+        for commandTextBoxes in self.commandGroups:
+            commandText = (commandTextBoxes.commandTextEdit.text()).rstrip().lstrip()
+            labelText = (commandTextBoxes.commandLabel.text()).rstrip().lstrip()
+            if commandText != '':
+                commandList.append(Command(commandText, labelText))
+        # return something only is there are any commands given
+        retVal = None
+        if len(commandList) > 0:
+            retVal = commandList
+        return retVal
+
+
+    def saveCommands(self):
+        dialog = SaveCmdDialog(self.commandHolder)
         ret = dialog.exec_()
         # if the user pressed OK, fill text boxes with the given command set
         if ret == QtWidgets.QDialog.Accepted:
-            if dialog.dataEntered():
-                # the given configuration is the active one now
-
-                # update UI using the active configuration
-                self.loadCommandSet(self.commandHolder.getActiveCommandSet())
-        self.updateCombobox()
+            cmdset_name = dialog.name
+            if cmdset_name != None:
+                # gather all the commands and labels
+                commandList = self.getDataFromTextBoxes()
+                # add it to CommandHolder
+                self.commandHolder.add(cmdset_name, commandList)
+                # save command holder
+                self.commandHolder.saveToXml()
+                self.updateCombobox()
 
 
     def loadCommandSet(self, commandSetName):
         # clear all the current text boxes
         for i in range(0, len(self.commandGroups)):
             self.commandGroups[i].commandTextEdit.clear()
-            self.commandGroups[i].commandLabel.setText('Command ' + str(i))
+            self.commandGroups[i].commandLabel.clear()
 
         if commandSetName != None and commandSetName in self.commandHolder.getAll():
             # fill the text boxes with the data from the given command set
@@ -146,7 +165,6 @@ class Terminal(QtWidgets.QMainWindow, Ui_TerminalWin):
                 self.commandGroups[j].commandTextEdit.setText(command.content)
                 if command.label != '':
                     self.commandGroups[j].commandLabel.setText(command.label)
-                    self.commandGroups[j].commandLabel.adjustSize()
                 j += 1
 
 
@@ -155,6 +173,7 @@ class Terminal(QtWidgets.QMainWindow, Ui_TerminalWin):
         self.comboBox.clear()
         self.comboBox.addItems(self.commandHolder.getAll().keys())
         active = self.commandHolder.getActiveCommandSet()
+        print('Active command set: ', active)
         index = self.comboBox.findText(active, QtCore.Qt.MatchFixedString)
         if index >= 0:
              self.comboBox.setCurrentIndex(index)
@@ -163,7 +182,7 @@ class Terminal(QtWidgets.QMainWindow, Ui_TerminalWin):
     def updateOnComboboxChange(self):
         # called on combobox change
         currentName =   self.comboBox.currentText()
-        self.commandHolder.setActiveCommandSet(currentName)
+#        self.commandHolder.setActiveCommandSet(currentName)
         self.loadCommandSet(currentName)
 
 
